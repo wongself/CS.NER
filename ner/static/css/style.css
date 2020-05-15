@@ -1,4 +1,4 @@
-/* Panel */
+/* Page */
 .page_container {
   background: #f1f1f1;
   min-height: calc(100vh - 130px);
@@ -9,7 +9,9 @@
   padding-top: 60px;
   padding-bottom: 40px;
 }
+/* Page */
 
+/* Textarea */
 textarea {
   resize: none;
 }
@@ -43,17 +45,78 @@ textarea {
   position: relative;
   display: block
 }
+/* Textarea */
 
-.row_textarea {
-  min-height: calc(100vh - 130px);
+/* Checkbox */
+.custom-checkbox .custom-control-label::before {
+  border-radius: 0rem;
 }
 
-/* Panel */
-.page_ctainer {
-  background: #f1f1f1;
-  min-height: calc(100vh - 60px);
-  overflow: visible !important;
+.checkbox_task_control input[type="checkbox"]:checked+label::after,
+.checkbox_method_control input[type="checkbox"]:checked+label::after,
+.checkbox_metric_control input[type="checkbox"]:checked+label::after,
+.checkbox_material_control input[type="checkbox"]:checked+label::after,
+.checkbox_other_control input[type="checkbox"]:checked+label::after,
+.checkbox_generic_control input[type="checkbox"]:checked+label::after {
+  color: #FFFFFF;
 }
+
+.checkbox_task_control input[type="checkbox"]:checked+label::before {
+  background-color: #CEAA20;
+  border-color: #CEAA20;
+}
+
+.checkbox_method_control input[type="checkbox"]:checked+label::before {
+  background-color: #ACC91B;
+  border-color: #ACC91B;
+}
+
+.checkbox_metric_control input[type="checkbox"]:checked+label::before {
+  background-color: #40BE25;
+  border-color: #40BE25;
+}
+
+.checkbox_material_control input[type="checkbox"]:checked+label::before {
+  background-color: #13AC9D;
+  border-color: #13AC9D;
+}
+
+.checkbox_other_control input[type="checkbox"]:checked+label::before {
+  background-color: #136FAC;
+  border-color: #136FAC;
+}
+
+.checkbox_generic_control input[type="checkbox"]:checked+label::before {
+  background-color: #4742DF;
+  border-color: #4742DF;
+}
+
+.custom-checkbox input[type="checkbox"]:not(:checked):hover+label::before {
+  background-color: #CCCCCC;
+}
+
+/* .checkbox-color-per input[type="checkbox"]+label::before {
+  background-color: #ffcdd2;
+  border-color: #ffcdd2;
+} */
+/* Checkbox */
+
+/* Selection */
+::selection {
+  color: #ffffff;
+  background-color: #dc3545;
+}
+
+::-moz-selection {
+  color: #ffffff;
+  background-color: #dc3545;
+}
+
+::-webkit-selection {
+  color: #ffffff;
+  background-color: #dc3545;
+}
+/* Selection */
 
 /* Extra small devices (portrait phones, less than 576px) */
 @media (max-width: 575.98px) {
