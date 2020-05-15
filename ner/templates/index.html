@@ -9,6 +9,9 @@
   <title>Politics Hammer</title>
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+  <!-- Font -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400" />
   <!-- Bootstrap core CSS -->
   <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
   <!-- Material Design Bootstrap -->
@@ -26,242 +29,121 @@
 
   <!--Main Navigation-->
   <header>
-
     <!-- Navbar -->
-    <nav class="navbar fixed-top navbar-expand-md navbar-dark scrolling-navbar">
+    <nav class="navbar fixed-top navbar-light white">
       <div class="container">
-
         <!-- Brand -->
         <a class="navbar-brand" href="{% url 'index' %}">
+          <img src="{% static 'img/ner.svg' %}" height="30" class="d-inline-block align-top" alt="csner logo">
           <strong>
-            Politics<sup><i class="fas fa-hammer fa-flip-horizontal"></i></sup>
+            CS.NER<sup><i class="fas fa-hammer fa-flip-horizontal"></i></sup>
           </strong>
         </a>
+        <!-- Brand -->
 
-        <!-- Collapse -->
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <!-- Links -->
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-
-          <!-- Right -->
-          <ul class="navbar-nav nav-flex-icons">
-            <li class="nav-item">
-              <a href="" class="nav-link" target="_blank">
-                v 1.7.0
-              </a>
-            </li>
-          </ul>
-          <!-- Right -->
-
-        </div>
-        <!-- Links -->
-
+        <!-- Link -->
+        <ul class="navbar-nav ml-auto nav-flex-icons">
+          <li class="nav-item">
+            <a href="https://github.com/wongself/csner" class="nav-link waves-effect waves-light">
+              <i class="fab fa-github fa-lg"></i>
+            </a>
+          </li>
+        </ul>
+        <!-- Link -->
       </div>
     </nav>
     <!-- Navbar -->
-
   </header>
   <!--Main Navigation-->
 
   <!--Main layout-->
-  <main>
+  <div class="page_container">
 
-    <div class="view banner">
-
-      <!-- Mask & flexbox options-->
-      <div class="mask rgba-black-light d-flex justify-content-center align-items-center">
-
-        <!-- Content -->
-        <div class="text-center white-text mx-5 wow fadeInUp">
-
-          <!-- Title -->
-          <h1 class="mt-5 mb-2">
-            <strong>实体识别</strong>
-          </h1>
-
-          <p class="mb-2">
-            <strong>Politics Hammer</strong>
-          </p>
-          <!-- Title -->
-
-          <!-- Introduction -->
-          <div class="row mb-2">
-            <div class="col-lg-6 col-md-8 mx-auto">
-              <p class="mb-1 text-left">
-                <strong>
-                  实体识别是自然语言处理中的一项基础任务，一般指识别文本中具有特定意义或者指代性强的实体。实体识别一般包含两部分过程：实体边界识别，以及确定实体类别。本模块支持从非结构化的输入文本中抽取出指代为地点、机构和人名的三种实体。
-                </strong>
-              </p>
-              <p class="mb-4 text-left">
-                <strong>
-                  输入示例：据新华社记者刘欢报道，国务院总理李克强12月16日上午在人民大会堂会见来京述职的林郑月娥。
-                </strong>
-              </p>
+    <!--Main layout-->
+    <div class="container page_panel">
+      <!-- Checkbox-->
+      <div class="row row_checkbox my-3">
+        <div class="col-12">
+          <div class="d-flex justify-content-center">
+            <!-- Task-->
+            <div class="custom-control custom-checkbox custom-control-inline">
+              <input type="checkbox" class="custom-control-input" id="checkbox_task">
+              <label class="custom-control-label" for="checkbox_task">Task</label>
             </div>
-          </div>
-          <!-- Introduction -->
 
-          <!-- Search form -->
-          <div class="row">
-            <div class="col-lg-6 col-md-8 col-sm-10 mx-auto">
-              <div class="input-group mb-3">
-                <input type="text" id="input_string" class="form-control form-control-lg" placeholder="请至少输入一个字符"
-                  aria-label="Input with button addon" aria-describedby="button-addon2" value="贵州省人民政府的现任省长是谌贻琴"
-                  onfocus="this.select()">
-                <div class="input-group-append">
-                  <button id="query_button" class="btn btn-md btn-light m-0 px-3 py-0 z-depth-0 waves-effect"
-                    type="button">
-                    <span class="button-text">
-                      识别
-                    </span>
-                  </button>
-                </div>
-              </div>
+            <!-- Method-->
+            <div class="custom-control custom-checkbox custom-control-inline">
+              <input type="checkbox" class="custom-control-input" id="checkbox_method">
+              <label class="custom-control-label" for="checkbox_method">Method</label>
             </div>
-          </div>
-          <!-- Search form -->
 
-        </div>
-        <!-- Content -->
-
-      </div>
-      <!-- Mask & flexbox options-->
-
-    </div>
-
-    <div class="container-fluid">
-
-      <!-- Panel -->
-      <div class="panel" id="display-panel" style="background-image: url(./../static/img/shapes/2.svg);">
-
-        <div class="row justify-content-center py-5">
-          <div class="col-lg-6 col-md-8 col-sm-10">
-
-            <!-- Content -->
-            <div id="display-card">
-              <div class="card my-5 wow fadeIn" id="display-card">
-                <div class="card-body">
-                  <p class="card-result-text m-0" id="result">
-                    <span class="text-black-50">
-                      输出范例：<span class="text-color-loc">贵州省</span><span class="text-color-org">人民政府</span>的现任省长是<span
-                        class="text-color-per"></span>谌贻琴</span>
-                    </span>
-                  </p>
-
-                </div>
-                <div class="card-footer text-muted text-center">
-                  <!-- Checkbox -->
-                  <div class="custom-control custom-checkbox custom-control-inline checkbox-color-per">
-                    <input type="checkbox" class="custom-control-input" id="checkbox_per" onchange="change_color()"
-                      checked>
-                    <label class="custom-control-label" for="checkbox_per">人物</label>
-                  </div>
-
-                  <div class="custom-control custom-checkbox custom-control-inline checkbox-color-loc">
-                    <input type="checkbox" class="custom-control-input" id="checkbox_loc" onchange="change_color()"
-                      checked>
-                    <label class="custom-control-label" for="checkbox_loc">地点</label>
-                  </div>
-
-                  <div class="custom-control custom-checkbox custom-control-inline checkbox-color-org">
-                    <input type="checkbox" class="custom-control-input" id="checkbox_org" onchange="change_color()"
-                      checked>
-                    <label class="custom-control-label" for="checkbox_org">机构</label>
-                  </div>
-                  <!-- Checkbox -->
-                </div>
-              </div>
+            <!-- Metric-->
+            <div class="custom-control custom-checkbox custom-control-inline">
+              <input type="checkbox" class="custom-control-input" id="checkbox_metric">
+              <label class="custom-control-label" for="checkbox_metric">Metric</label>
             </div>
-            <!-- Content -->
 
+            <!-- Material-->
+            <div class="custom-control custom-checkbox custom-control-inline">
+              <input type="checkbox" class="custom-control-input" id="checkbox_material">
+              <label class="custom-control-label" for="checkbox_material">Material</label>
+            </div>
+
+            <!-- Other-->
+            <div class="custom-control custom-checkbox custom-control-inline">
+              <input type="checkbox" class="custom-control-input" id="checkbox_other">
+              <label class="custom-control-label" for="checkbox_other">Other</label>
+            </div>
+
+            <!-- Generic-->
+            <div class="custom-control custom-checkbox custom-control-inline">
+              <input type="checkbox" class="custom-control-input" id="checkbox_generic">
+              <label class="custom-control-label" for="checkbox_generic">Generic</label>
+            </div>
           </div>
         </div>
-
       </div>
-      <!-- Panel -->
+      <!-- Checkbox-->
 
+      <!-- Textarea-->
+      <div class="row row_recognizer">
+        <div class="col-6 inner_textarea_container">
+          <!-- Textarea-->
+          <textarea name="source_texarea" class="form-control z-depth-1" rows="30" placeholder="" maxlength="5000" autofocus></textarea>
+
+          <!-- Description-->
+          <span class="textarea_placeholder_text">
+            输入，粘贴文本，<br>
+            或在此处上传文档。<br>
+            <span class="edition_note">
+              当前仅支持英语文本
+            </span>
+          </span>
+        </div>
+        <div class="col-6 inner_textarea_container">
+          <!-- Textarea-->
+          <textarea name="target_texarea" class="form-control z-depth-1" rows="30" placeholder=" " maxlength="5000" readonly="readonly"></textarea>
+
+          <!-- Description-->
+          <span class="textarea_placeholder_text">
+            显示识别结果，<br>
+            或在此处导出结果。<br>
+            <span class="edition_note">
+              不同的实体将以颜色区分
+            </span>
+          </span>
+        </div>
+      </div>
+      <!-- Textarea-->
     </div>
+    <!--Main layout-->
 
-  </main>
+
+  </div>
   <!--Main layout-->
 
   <!-- Footer -->
-  <footer class="page-footer font-small unique-color-dark">
-
-    <!-- Footer Links -->
-    <div class="container text-center text-md-left mt-5 pt-4">
-
-      <!-- Grid row -->
-      <div class="row mt-3 wow fadeIn">
-
-        <!-- Grid column -->
-        <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
-
-          <!-- Content -->
-          <h6 class="text-uppercase font-weight-bold">Politics<sup><i
-                class="fas fa-hammer fa-flip-horizontal"></i></sup>
-          </h6>
-          <hr class="white accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
-          <p>
-            依托政务平台，持续拓展网上政务功能、优化服务体验、推进模式创新。欢迎大家使用政务平台并留下意见建议，我们将持续优化平台内容、完善平台功能。
-          </p>
-
-        </div>
-        <!-- Grid column -->
-
-        <!-- Grid column -->
-        <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
-
-          <!-- Links -->
-          <h6 class="text-uppercase font-weight-bold">特色服务</h6>
-          <hr class="white accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
-          <p>
-            <a href="">知识图谱</a>
-          </p>
-          <p>
-            <a href="">政务问答</a>
-          </p>
-          <p>
-            <a href="">实体识别</a>
-          </p>
-
-        </div>
-        <!-- Grid column -->
-
-        <!-- Grid column -->
-        <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
-
-          <!-- Links -->
-          <h6 class="text-uppercase font-weight-bold">联系我们</h6>
-          <hr class="white accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
-          <p>
-            <i class="fas fa-location-arrow mr-3"></i><a href="http://www.bit.edu.cn/">北京理工大学</a>
-          </p>
-          <p>
-            <i class="fas fa-home mr-3"></i><a href="http://datahammer.net/">Data Hammer</a>
-          </p>
-          <p>
-            <i class="fas fa-envelope mr-3"></i>100081
-          </p>
-
-        </div>
-        <!-- Grid column -->
-
-      </div>
-      <!-- Grid row -->
-
-    </div>
-    <!-- Footer Links -->
-
-    <!-- Copyright -->
-    <div class="footer-copyright text-center py-3">Copyright &copy; Politics Hammer 2019
-      <a href="http://datahammer.net/"> PoliticsHammer.com</a>
-    </div>
-    <!-- Copyright -->
+  <footer>
 
   </footer>
   <!-- Footer -->

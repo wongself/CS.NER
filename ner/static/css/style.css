@@ -1,24 +1,58 @@
 /* Panel */
-.panel {
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  box-shadow: inset 0px 0px 20px 25px #ffffff;
-  margin-top: 3rem !important;
+.page_container {
+  background: #f1f1f1;
+  min-height: calc(100vh - 130px);
+  overflow: visible !important;
 }
 
-.banner {
-  background: #c31432;
-  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #240b36, #c31432);
-  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #240b36, #c31432);
-  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+.page_panel {
+  padding-top: 60px;
+  padding-bottom: 40px;
 }
 
-#display-card {
-  margin-right: 0.5rem !important;
-  margin-left: 0.5rem !important;
+textarea {
+  resize: none;
+}
+
+.inner_textarea_container {
+  position: relative;
+  -webkit-text-size-adjust: none
+}
+
+.textarea_placeholder_text {
+  display: block;
+  position: absolute;
+  text-align: left;
+  cursor: text;
+  pointer-events: none;
+  top: 15px;
+  left: 30px;
+  right: 30px;
+  color: #959595;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 300;
+  font-size: inherit;
+  line-height: inherit;
+  font-size: 24px;
+}
+
+.textarea_placeholder_text>span {
+  font-size: 16px;
+  line-height: 150%;
+  top: .4em;
+  position: relative;
+  display: block
+}
+
+.row_textarea {
+  min-height: calc(100vh - 130px);
+}
+
+/* Panel */
+.page_ctainer {
+  background: #f1f1f1;
+  min-height: calc(100vh - 60px);
+  overflow: visible !important;
 }
 
 /* Extra small devices (portrait phones, less than 576px) */
@@ -30,28 +64,37 @@
 
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) and (max-width: 767.98px) {
-  .banner {
-    height: 80vh;
+  .textarea_placeholder_text {
+    top: 22px;
+    line-height: 20px;
+    border-left: none;
+    padding-right: 0;
+    font-size: 20px
+  }
+
+  .textarea_placeholder_text>span {
+    font-size: 16px
   }
 }
 
 /* Medium devices (tablets, 768px and up) */
 @media (min-width: 768px) and (max-width: 991.98px) {
-  .banner {
-    height: 65vh;
+  .textarea_placeholder_text {
+    left: 20px;
+    right: 20px
   }
 }
 
 /* Large devices (desktops, 992px and up) */
 @media (min-width: 992px) and (max-width: 1199.98px) {
-  .banner {
-    height: 50vh;
+  .textarea_placeholder_text {
+    font-size: 26px
   }
 }
 
 /* Extra large devices (large desktops, 1200px and up) */
 @media (min-width: 1200px) {
-  .banner {
-    height: 45vh;
+  .textarea_placeholder_text {
+    font-size: 26px
   }
 }
