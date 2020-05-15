@@ -1,0 +1,57 @@
+/* Panel */
+.panel {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  box-shadow: inset 0px 0px 20px 25px #ffffff;
+  margin-top: 3rem !important;
+}
+
+.banner {
+  background: #c31432;
+  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #240b36, #c31432);
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #240b36, #c31432);
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+#display-card {
+  margin-right: 0.5rem !important;
+  margin-left: 0.5rem !important;
+}
+
+/* Extra small devices (portrait phones, less than 576px) */
+@media (max-width: 575.98px) {
+  .banner {
+    height: 100vh;
+  }
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) and (max-width: 767.98px) {
+  .banner {
+    height: 80vh;
+  }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .banner {
+    height: 65vh;
+  }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+  .banner {
+    height: 50vh;
+  }
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+  .banner {
+    height: 45vh;
+  }
+}
