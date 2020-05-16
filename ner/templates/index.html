@@ -59,17 +59,17 @@
   <!--Main layout-->
   <div class="page_container">
 
-    <!--Main layout-->
+    <!-- Panel layout -->
     <div class="container page_panel">
-      <!-- Language-->
+      <!-- Language -->
       <div class="row row_language mt-3 mb-2">
         <div class="col-12 d-flex">
-          <!--Dropdown primary-->
+          <!-- Language Dropdown -->
           <div class="dropdown">
             <!--Trigger-->
             <button class="btn btn-light btn-sm dropdown-toggle ml-0" type="button" id="language_select_dropmenu"
               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Recognize from <span class="font-weight-bolder">English</span>
+              From <span class="font-weight-bold">English</span>
             </button>
 
             <!--Menu-->
@@ -78,13 +78,13 @@
               <button class="dropdown-item" type="button" disabled>More languages coming soon</button>
             </div>
           </div>
-          <!--/Dropdown primary-->
+          <!-- Language Dropdown -->
 
-          <!--Dropdown primary-->
+          <!-- Translate Button -->
           <button type="button" class="btn btn-sm btn-outline-primary waves-effect" id="query_button">
-            Translate
+            Recognize
           </button>
-          <!--/Dropdown primary-->
+          <!-- Translate Button -->
 
           <!-- Type Checkbox Group -->
           <div class="btn-group btn-group-sm type_checkbox_group ml-auto" data-toggle="buttons">
@@ -116,16 +116,16 @@
           <!-- Type Checkbox Group -->
         </div>
       </div>
-      <!-- Language-->
+      <!-- Language -->
 
-      <!-- Textarea-->
+      <!-- Textarea -->
       <div class="row row_recognizer">
         <div class="col-6 inner_textarea_container">
-          <!-- Textarea-->
-          <textarea name="source_texarea" class="form-control z-depth-1" rows="30" placeholder="" maxlength="5000"
-            autofocus></textarea>
+          {% csrf_token %}
+          <!-- Textarea -->
+          <textarea name="source_texarea" class="form-control z-depth-1" rows="28" id="source_texarea" placeholder="" maxlength="1000" autofocus></textarea>
 
-          <!-- Description-->
+          <!-- Description -->
           <span class="textarea_placeholder_text">
             Type, paste test,<br>
             or drop document here。<br>
@@ -134,11 +134,26 @@
             </span>
           </span>
 
+          <!-- Upload Document -->
+          <span class="textarea_upload_text">
+            <button type="button" class="btn btn-link p-0 m-0" id="upload_doc_button">
+              <div class="d-flex align-items-center">
+                <i class="fas fa-file-upload fa-2x mr-2"></i>
+                Upload Document
+              </div>
+            </button>
+            <input type="file" style="display:none;" id="upload_doc_input">
+          </span>
+
+          <!-- Statistic -->
+          <span class="textarea_statistic_text">
+            <span id="textarea_statistic_current">0</span>/1000
+          </span>
+
         </div>
         <div class="col-6 inner_textarea_container">
-          <!-- Textarea-->
-          <textarea name="target_texarea" class="form-control z-depth-1" rows="30" placeholder=" " maxlength="5000"
-            readonly="readonly"></textarea>
+          <!-- Textarea -->
+          <textarea name="target_texarea" class="form-control z-depth-1" id="target_texarea" rows="28" placeholder=" " maxlength="1000" readonly="readonly"></textarea>
 
           <!-- Description-->
           <span class="textarea_placeholder_text">
@@ -152,7 +167,7 @@
       </div>
       <!-- Textarea-->
     </div>
-    <!--Main layout-->
+    <!-- Panel layout-->
 
     <!--Introduction layout-->
     <div class="container-fluid page_introduction">
@@ -210,21 +225,30 @@
   <!-- Footer -->
 
   <!-- Modal -->
-  <div class="modal fade" id="source_check_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-
-    <!-- Add .modal-dialog-centered to .modal-dialog to vertically center the modal -->
+  <div class="modal fade" id="source_check_modal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-dialog-centered modal-sm modal-notify modal-danger" role="document">
 
       <!--Content-->
       <div class="modal-content text-center">
+        <!--Header-->
         <div class="modal-header d-flex justify-content-center">
-          <p class="heading">请输入至少一个字符</p>
+          <p class="heading">Enter at least one character</p>
         </div>
+        <!--Header-->
+
+        <!--Body-->
+        <div class="modal-body">
+          <i class="fas fa-times fa-4x animated rotateIn"></i>
+        </div>
+        <!--Body-->
+
+        <!--Footer-->
         <div class="modal-footer d-flex justify-content-center">
           <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">
-            关闭
+            OK
           </button>
         </div>
+        <!--Footer-->
       </div>
       <!--Content-->
 
@@ -243,11 +267,6 @@
   <!-- Pragess Bar in Head of Page -->
   <script type="text/javascript" src="{% static 'js/nprogress.min.js' %}"></script>
   <!-- Your custom scripts (optional) -->
-  <script type="text/javascript">
-    // Animations initialization
-    new WOW().init();
-  </script>
-
   <script type="text/javascript" src="{% static 'js/style.js' %}"></script>
 
 </body>
