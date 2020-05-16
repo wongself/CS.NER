@@ -1,3 +1,19 @@
+/* Variables */
+:root {
+  --type-checkbox-task-checked-color: #FFBF33;
+  --type-checkbox-task-unchecked-color: #FFE084;
+  --type-checkbox-method-checked-color: #B1BA24;
+  --type-checkbox-method-unchecked-color: #E4EA78;
+  --type-checkbox-metric-checked-color: #51C521;
+  --type-checkbox-metric-unchecked-color: #A9ED76;
+  --type-checkbox-material-checked-color: #1B9D96;
+  --type-checkbox-material-unchecked-color: #71E1C7;
+  --type-checkbox-other-checked-color: #1D6EB8;
+  --type-checkbox-other-unchecked-color: #71BBE7;
+  --type-checkbox-generic-checked-color: #AA52E5;
+  --type-checkbox-generic-unchecked-color: #DC97F7;
+}
+
 /* Page */
 .page_container {
   background: #f1f1f1;
@@ -7,9 +23,124 @@
 
 .page_panel {
   padding-top: 60px;
+  padding-bottom: 20px;
+}
+
+.page_introduction {
+  padding-top: 20px;
   padding-bottom: 40px;
 }
+
+.page-footer,
+.footer-copyright {
+  background-color: #f1f1f1 !important;
+}
+
 /* Page */
+
+/* Language & Translate */
+#language_select_dropmenu {
+  font-family: "Open Sans", sans-serif;
+}
+
+.dropdown-item {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  font-family: "Open Sans", sans-serif;
+}
+
+/* Language */
+
+/* Checkbox */
+.type_checkbox_group .form-check-input {
+  visibility: hidden;
+}
+
+.type_checkbox_group .btn {
+  margin-top: auto;
+  margin-bottom: auto;
+  padding: 0.25rem 0.8rem;
+  font-family: "Open Sans", sans-serif;
+}
+
+.type_checkbox_group .btn:focus,
+.type_checkbox_group .btn.focus {
+  -webkit-box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
+  box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15)
+}
+
+.type_checkbox_task {
+  background-color: var(--type-checkbox-task-unchecked-color);
+  border-color: var(--type-checkbox-task-unchecked-color);
+}
+
+.type_checkbox_task:focus,
+.type_checkbox_task:active,
+.type_checkbox_task.active {
+  background-color: var(--type-checkbox-task-checked-color);
+  border-color: var(--type-checkbox-task-checked-color);
+}
+
+.type_checkbox_method {
+  background-color: var(--type-checkbox-method-unchecked-color);
+  border-color: var(--type-checkbox-method-unchecked-color);
+}
+
+.type_checkbox_method:focus,
+.type_checkbox_method:active,
+.type_checkbox_method.active {
+  background-color: var(--type-checkbox-method-checked-color);
+  border-color: var(--type-checkbox-method-checked-color);
+}
+
+.type_checkbox_metric {
+  background-color: var(--type-checkbox-metric-unchecked-color);
+  border-color: var(--type-checkbox-metric-unchecked-color);
+}
+
+.type_checkbox_metric:focus,
+.type_checkbox_metric:active,
+.type_checkbox_metric.active {
+  background-color: var(--type-checkbox-metric-checked-color);
+  border-color: var(--type-checkbox-metric-checked-color);
+}
+
+.type_checkbox_material {
+  background-color: var(--type-checkbox-material-unchecked-color);
+  border-color: var(--type-checkbox-material-unchecked-color);
+}
+
+.type_checkbox_material:focus,
+.type_checkbox_material:active,
+.type_checkbox_material.active {
+  background-color: var(--type-checkbox-material-checked-color);
+  border-color: var(--type-checkbox-material-checked-color);
+}
+
+.type_checkbox_other {
+  background-color: var(--type-checkbox-other-unchecked-color);
+  border-color: var(--type-checkbox-other-unchecked-color);
+}
+
+.type_checkbox_other:focus,
+.type_checkbox_other:active,
+.type_checkbox_other.active {
+  background-color: var(--type-checkbox-other-checked-color);
+  border-color: var(--type-checkbox-other-checked-color);
+}
+
+.type_checkbox_generic {
+  background-color: var(--type-checkbox-generic-unchecked-color);
+  border-color: var(--type-checkbox-generic-unchecked-color);
+}
+
+.type_checkbox_generic:focus,
+.type_checkbox_generic:active,
+.type_checkbox_generic.active {
+  background-color: var(--type-checkbox-generic-checked-color);
+  border-color: var(--type-checkbox-generic-checked-color);
+}
+/* Checkbox */
 
 /* Textarea */
 textarea {
@@ -45,61 +176,8 @@ textarea {
   position: relative;
   display: block
 }
+
 /* Textarea */
-
-/* Checkbox */
-.custom-checkbox .custom-control-label::before {
-  border-radius: 0rem;
-}
-
-.checkbox_task_control input[type="checkbox"]:checked+label::after,
-.checkbox_method_control input[type="checkbox"]:checked+label::after,
-.checkbox_metric_control input[type="checkbox"]:checked+label::after,
-.checkbox_material_control input[type="checkbox"]:checked+label::after,
-.checkbox_other_control input[type="checkbox"]:checked+label::after,
-.checkbox_generic_control input[type="checkbox"]:checked+label::after {
-  color: #FFFFFF;
-}
-
-.checkbox_task_control input[type="checkbox"]:checked+label::before {
-  background-color: #CEAA20;
-  border-color: #CEAA20;
-}
-
-.checkbox_method_control input[type="checkbox"]:checked+label::before {
-  background-color: #ACC91B;
-  border-color: #ACC91B;
-}
-
-.checkbox_metric_control input[type="checkbox"]:checked+label::before {
-  background-color: #40BE25;
-  border-color: #40BE25;
-}
-
-.checkbox_material_control input[type="checkbox"]:checked+label::before {
-  background-color: #13AC9D;
-  border-color: #13AC9D;
-}
-
-.checkbox_other_control input[type="checkbox"]:checked+label::before {
-  background-color: #136FAC;
-  border-color: #136FAC;
-}
-
-.checkbox_generic_control input[type="checkbox"]:checked+label::before {
-  background-color: #4742DF;
-  border-color: #4742DF;
-}
-
-.custom-checkbox input[type="checkbox"]:not(:checked):hover+label::before {
-  background-color: #CCCCCC;
-}
-
-/* .checkbox-color-per input[type="checkbox"]+label::before {
-  background-color: #ffcdd2;
-  border-color: #ffcdd2;
-} */
-/* Checkbox */
 
 /* Selection */
 ::selection {
@@ -116,6 +194,7 @@ textarea {
   color: #ffffff;
   background-color: #dc3545;
 }
+
 /* Selection */
 
 /* Extra small devices (portrait phones, less than 576px) */

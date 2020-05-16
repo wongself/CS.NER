@@ -6,7 +6,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <title>Politics Hammer</title>
+  <title>CS.NER - NER for scientific text</title>
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
   <!-- Font -->
@@ -34,7 +34,7 @@
       <div class="container">
         <!-- Brand -->
         <a class="navbar-brand" href="{% url 'index' %}">
-          <img src="{% static 'img/ner.svg' %}" height="30" class="d-inline-block align-top" alt="csner logo">
+          <img src="{% static 'img/svg/ner.svg' %}" height="30" class="d-inline-block align-top" alt="csner logo">
           <strong>
             CS.NER<sup><i class="fas fa-hammer fa-flip-horizontal"></i></sup>
           </strong>
@@ -61,75 +61,91 @@
 
     <!--Main layout-->
     <div class="container page_panel">
-      <!-- Checkbox-->
-      <div class="row row_checkbox my-4">
-        <div class="col-12">
-          <div class="d-flex justify-content-center">
-            <!-- Task-->
-            <div class="custom-control custom-checkbox custom-control-inline checkbox_task_control">
-              <input type="checkbox" class="custom-control-input" id="checkbox_task" checked>
-              <label class="custom-control-label" for="checkbox_task">Task</label>
-            </div>
+      <!-- Language-->
+      <div class="row row_language mt-3 mb-2">
+        <div class="col-12 d-flex">
+          <!--Dropdown primary-->
+          <div class="dropdown">
+            <!--Trigger-->
+            <button class="btn btn-light btn-sm dropdown-toggle ml-0" type="button" id="language_select_dropmenu"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Recognize from <span class="font-weight-bolder">English</span>
+            </button>
 
-            <!-- Method-->
-            <div class="custom-control custom-checkbox custom-control-inline checkbox_method_control">
-              <input type="checkbox" class="custom-control-input" id="checkbox_method" checked>
-              <label class="custom-control-label" for="checkbox_method">Method</label>
-            </div>
-
-            <!-- Metric-->
-            <div class="custom-control custom-checkbox custom-control-inline checkbox_metric_control">
-              <input type="checkbox" class="custom-control-input" id="checkbox_metric" checked>
-              <label class="custom-control-label" for="checkbox_metric">Metric</label>
-            </div>
-
-            <!-- Material-->
-            <div class="custom-control custom-checkbox custom-control-inline checkbox_material_control">
-              <input type="checkbox" class="custom-control-input" id="checkbox_material" checked>
-              <label class="custom-control-label" for="checkbox_material">Material</label>
-            </div>
-
-            <!-- Other-->
-            <div class="custom-control custom-checkbox custom-control-inline checkbox_other_control">
-              <input type="checkbox" class="custom-control-input" id="checkbox_other" checked>
-              <label class="custom-control-label" for="checkbox_other">Other</label>
-            </div>
-
-            <!-- Generic-->
-            <div class="custom-control custom-checkbox custom-control-inline checkbox_generic_control">
-              <input type="checkbox" class="custom-control-input" id="checkbox_generic" checked>
-              <label class="custom-control-label" for="checkbox_generic">Generic</label>
+            <!--Menu-->
+            <div class="dropdown-menu" aria-labelledby="language_select_dropmenu">
+              <button class="dropdown-item" type="button">English</button>
+              <button class="dropdown-item" type="button" disabled>More languages coming soon</button>
             </div>
           </div>
+          <!--/Dropdown primary-->
+
+          <!--Dropdown primary-->
+          <button type="button" class="btn btn-sm btn-outline-primary waves-effect" id="query_button">
+            Translate
+          </button>
+          <!--/Dropdown primary-->
+
+          <!-- Type Checkbox Group -->
+          <div class="btn-group btn-group-sm type_checkbox_group ml-auto" data-toggle="buttons">
+            <label class="btn form-check-label type_checkbox_task">
+              <input class="form-check-input" type="checkbox" autocomplete="off" checked>
+              Task
+            </label>
+            <label class="btn form-check-label type_checkbox_method">
+              <input class="form-check-input" type="checkbox" autocomplete="off" checked>
+              Method
+            </label>
+            <label class="btn form-check-label type_checkbox_metric">
+              <input class="form-check-input" type="checkbox" autocomplete="off" checked>
+              Metric
+            </label>
+            <label class="btn form-check-label type_checkbox_material">
+              <input class="form-check-input" type="checkbox" autocomplete="off" checked>
+              Material
+            </label>
+            <label class="btn form-check-label type_checkbox_other">
+              <input class="form-check-input" type="checkbox" autocomplete="off" checked>
+              Other
+            </label>
+            <label class="btn form-check-label type_checkbox_generic mr-0">
+              <input class="form-check-input" type="checkbox" autocomplete="off" checked>
+              Generic
+            </label>
+          </div>
+          <!-- Type Checkbox Group -->
         </div>
       </div>
-      <!-- Checkbox-->
+      <!-- Language-->
 
       <!-- Textarea-->
       <div class="row row_recognizer">
         <div class="col-6 inner_textarea_container">
           <!-- Textarea-->
-          <textarea name="source_texarea" class="form-control z-depth-1" rows="30" placeholder="" maxlength="5000" autofocus></textarea>
+          <textarea name="source_texarea" class="form-control z-depth-1" rows="30" placeholder="" maxlength="5000"
+            autofocus></textarea>
 
           <!-- Description-->
           <span class="textarea_placeholder_text">
-            输入，粘贴文本，<br>
-            或在此处上传文档。<br>
+            Type, paste test,<br>
+            or drop document here。<br>
             <span class="edition_note">
-              当前仅支持英语文本
+              Currently supported in English only
             </span>
           </span>
+
         </div>
         <div class="col-6 inner_textarea_container">
           <!-- Textarea-->
-          <textarea name="target_texarea" class="form-control z-depth-1" rows="30" placeholder=" " maxlength="5000" readonly="readonly"></textarea>
+          <textarea name="target_texarea" class="form-control z-depth-1" rows="30" placeholder=" " maxlength="5000"
+            readonly="readonly"></textarea>
 
           <!-- Description-->
           <span class="textarea_placeholder_text">
-            显示识别结果，<br>
-            或在此处导出结果。<br>
+            Display the results of the recognizer,<br>
+            or export results here.<br>
             <span class="edition_note">
-              不同类别将以颜色区分
+              Different types will be distinguished by color.
             </span>
           </span>
         </div>
@@ -138,19 +154,63 @@
     </div>
     <!--Main layout-->
 
+    <!--Introduction layout-->
+    <div class="container-fluid page_introduction">
+
+      <section class="dark-grey-text">
+
+        <div class="row pr-lg-5">
+          <div class="col-md-7 mb-4">
+
+            <div class="view">
+              <img src="{% static 'img/svg/clumsy.svg' %}" class="img-fluid" alt="csner illustration">
+            </div>
+
+          </div>
+          <div class="col-md-5 d-flex align-items-center">
+            <div>
+
+              <h3 class="font-weight-bold mb-4">CS.NER</h3>
+
+              <p>
+                CS.NER, a span-based model for named entity recogniton that relies on the pre-trained Transformer
+                network SciBERT as its core. With strong negative sampling, span filtering, and a localized context
+                representation, a search over all spans in an input document becomes feasible. Span-based approaches
+                perform competitive to BILOU-based models and may be the more promising approach for future research due
+                to their ability to identify overlapping entities.
+              </p>
+              <p>
+                In the future, we plan to investigate more elaborate features of context for entity classifiers.
+              </p>
+
+              <button type="button" class="btn btn-orange btn-rounded mx-0">Contact US</button>
+
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+    </div>
+    <!--Introduction layout-->
 
   </div>
   <!--Main layout-->
 
   <!-- Footer -->
-  <footer>
+  <footer class="page-footer font-small">
+
+    <!-- Copyright -->
+    <div class="footer-copyright text-center py-3 text-muted">© 2020 Copyright
+      <a href="http://wiki.datahammer.net/" class="text-dark pl-1"> DataHammer.net</a>
+    </div>
+    <!-- Copyright -->
 
   </footer>
   <!-- Footer -->
 
   <!-- Modal -->
-  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-    aria-hidden="true">
+  <div class="modal fade" id="source_check_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 
     <!-- Add .modal-dialog-centered to .modal-dialog to vertically center the modal -->
     <div class="modal-dialog modal-dialog-centered modal-sm modal-notify modal-danger" role="document">
