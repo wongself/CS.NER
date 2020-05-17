@@ -25,39 +25,64 @@ var type_none_color = 'transparent';
 //   }
 // })
 
-$('#source_texarea').bind('input propertychange', function () {
-  var $text_src = $('#source_texarea')
-  var $text_curr = $('#textarea_statistic_current')
-  var $text_place = $('.textarea_placeholder_text')
-  var max_length = 1000
-  var text_src_length = $text_src.val().length
-  var text_src_remain = parseInt(max_length - text_src_length)
-
-  if (text_src_length > 0) {
-    $text_place.css('display', 'none')
-  } else {
-    $text_place.css('display', 'block')
-  }
-
-  if (text_src_remain > 0) {
-    $text_curr.html(text_src_length)
-  } else {
-    $text_curr.html(max_length)
-    $text_src.val($text_src.val().substring(0, max_length))
-  }
-});
-
 $(function () {
+  $('#source_texarea').val('')
+  console.log($('#target_texarea').html().length)
+  console.log($('#target_texarea').text().length)
+  // $('#target_texarea').html('')
+
+  $('#source_texarea').bind('input propertychange', function () {
+    var $text_src = $('#source_texarea')
+    var $text_dst = $('#target_texarea')
+    var $text_curr = $('#textarea_statistic_current')
+    var $text_src_place = $('#source_texarea_placeholder_text')
+    var $text_dst_place = $('#target_texarea_placeholder_text')
+    var max_length = 2000
+    var text_src_length = $text_src.val().length
+    var text_dst_length = $text_dst.text().length
+    var text_src_remain = parseInt(max_length - text_src_length)
+
+    if (text_src_length > 0) {
+      $text_src_place.css('display', 'none')
+      $text_dst_place.css('display', 'none')
+    } else {
+      if (text_dst_length > 0) {
+        $text_src_place.css('display', 'block')
+      } else {
+        $text_src_place.css('display', 'block')
+        $text_dst_place.css('display', 'block')
+      }
+    }
+
+    if (text_src_remain > 0) {
+      $text_curr.html(text_src_length)
+    } else {
+      $text_curr.html(max_length)
+      $text_src.val($text_src.val().substring(0, max_length))
+    }
+  })
+
   $('#upload_doc_button').on('click', function () {
     $('#upload_doc_input').trigger('click');
   });
 
+  $('#upload_doc_input').on('change', function () {
+    console.log('file input')
+    var fileInput = ($('#upload_doc_input'))[0]
+    if (!fileInput.value) {
+      console.log('file no input')
+      return;
+    }
+
+    var file = fileInput.files[0];
+
+    console.log('文件: ' + file.name)
+    console.log('大小: ' + file.size)
+  });
+
   $('#query_button').on('click', function () {
-    console.log('test\n');
     var $text_src = $('#source_texarea')
-    var $text_dst = $('#target_texarea')
-    var csrftoken = $("[name=csrfmiddlewaretoken]").val();
-    text_src = $text_src.val();
+    var text_src = $text_src.val();
 
     if (text_src.length <= 0) {
       $('#source_check_modal').modal();
@@ -78,58 +103,100 @@ $(function () {
       },
       dataType: 'json',
       success: function (ret) {
-        console.log(ret['entity']);
-        // $('#result').text(str)
-        entity = ret['entity'];
-        $text_dst.text(entity)
+        // console.log(ret)
+        var jpredictions = ret['jpredictions']
+        target_texarea_text = _parse_jpredictions(jpredictions)
+        $('#target_texarea').html('')
+        $('#target_texarea').html(target_texarea_text)
+        _highlight_jpredictions()
         $('#query_button').html('Recognize').removeClass('disabled');
       },
       error: function (ret) {
-        console.log('error');
-        console.log(ret);
+        console.log('error: ' + ret);
         $('#query_button').html('Recognize').removeClass('disabled');
       }
     })
   })
 })
 
-function set_color(per, loc, org) {
-  function showEntity(key, mode) {
-    var color;
-    if (mode == 'LOC') {
-      color = loc;
-    }
-    else if (mode == 'PER') {
-      color = per;
-    }
-    else if (mode == 'ORG') {
-      color = org;
-    }
-    return '<span style="background-color: ' + color + '">' + key + '</span>';
-  }
+function _parse_jpredictions(jpredictions) {
+  console.log('Start Parsing')
+  console.log(jpredictions)
+  var target_texarea_text = ''
+  $.each(jpredictions, function (index, doc) {
+    var jtokens = doc['tokens']
+    var jentities = doc['entities']
+    var index_tokens_type = (new Array(jtokens.length)).fill(1)
+    console.log(jentities.slice(2))
+    $.each(jentities, function (index, entity) {
+      var etype = entity['type']
+      var estart = entity['start']
+      var eend = entity['end']
+      for (let i = estart; i < eend; i++) {
+        index_tokens_type[i] *= _get_type_index(etype);
+      }
+    })
+    $.each(jtokens, function (index, token) {
+      var tokens_type_color = _get_type_color(index_tokens_type[index])
 
-  if (entity == undefined || str == undefined) {
-    return '';
-  }
+      if (index && index_tokens_type[index - 1] !== 1) {
+        target_texarea_text += '<span class="' + tokens_type_color + '">&nbsp;</span>'
+      } else if (index) {
+        target_texarea_text += '&nbsp;'
+      }
 
-  var html = '';
-  var tmp;
-  for (var i = 0; i < str.length; i++) {
-    if (entity[i] == 'B-LOC' || entity[i] == 'I-LOC') {
-      tmp = showEntity(str[i], 'LOC');
-    }
-    else if (entity[i] == 'B-PER' || entity[i] == 'I-PER') {
-      tmp = showEntity(str[i], 'PER');
-    }
-    else if (entity[i] == 'B-ORG' || entity[i] == 'I-ORG') {
-      tmp = showEntity(str[i], 'ORG');
-    }
-    else {
-      tmp = str[i];
-    }
-    html += tmp;
+      target_texarea_text += '<span class="' + tokens_type_color + '">' + token + '</span>'
+    })
+    // target_texarea_text = target_texarea_text.slice(0, -1)
+    target_texarea_text += '<br>'
+  })
+  console.log(target_texarea_text)
+  return target_texarea_text
+}
+
+function _get_type_index(type) {
+  switch (type) {
+    case 'Task':
+      return 2
+    case 'Method':
+      return 3
+    case 'Material':
+      return 5
+    case 'OtherScientificTerm':
+      return 7
+    case 'Metric':
+      return 11
+    case 'Generic':
+      return 13
+    default:
+      return 1
   }
-  return html;
+}
+
+function _get_type_color(index) {
+  switch (index) {
+    case 2:
+      return 'type-checkbox-task'
+    case 3:
+      return 'type-checkbox-method'
+    case 5:
+      return 'type-checkbox-metric'
+    case 7:
+      return 'type-checkbox-material'
+    case 11:
+      return 'type-checkbox-other'
+    case 13:
+      return 'type-checkbox-generic'
+    default:
+      return 'none'
+  }
+}
+
+function _highlight_jpredictions() {
+  console.log('Start highlighting')
+  $('#target_texarea').highlightWithinTextarea({
+    highlight: 'Japanese'
+  });
 }
 
 function change_color() {
@@ -156,9 +223,8 @@ function change_color() {
   result.innerHTML = set_color(per, loc, org);
 }
 
-
-
 NProgress.configure({ showSpinner: false });
+
 $(document).ajaxStart(function () {
   NProgress.start();
 });

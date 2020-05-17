@@ -47,7 +47,6 @@
   padding-bottom: 0.5rem;
   font-family: "Open Sans", sans-serif;
 }
-
 /* Language */
 
 /* Checkbox */
@@ -143,9 +142,12 @@
 
 /* Textarea */
 .row_recognizer textarea {
+	height: 100%;
+}
+
+textarea {
+  padding: 0.65rem 0.75rem !important;
   resize: none;
-  padding-top: 0.8rem;
-  padding-bottom: 0.8rem;
 }
 
 .inner_textarea_container {
@@ -179,7 +181,18 @@
 }
 /* Textarea */
 
-/* Upload Document */
+/* Panel */
+.inner_textarea_container .card.target_card {
+  height: 100%;
+  background-color: #e9ecef;
+}
+
+.target_card_body {
+  padding: 0.65rem 0.75rem !important;
+}
+/* Panel */
+
+/* Widgets */
 .textarea_upload_text {
   display: block;
   position: absolute;
@@ -193,7 +206,21 @@
   line-height: inherit;
   font-size: 15px;
 }
-/* Statistic */
+
+.textarea_export_text {
+  display: block;
+  position: absolute;
+  text-align: right;
+  cursor: text;
+  bottom: 15px;
+  right: 30px;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 300;
+  font-size: inherit;
+  line-height: inherit;
+  font-size: 15px;
+}
+/* Widgets */
 
 /* Statistic */
 .textarea_statistic_text {
@@ -227,8 +254,33 @@
   color: #ffffff;
   background-color: #dc3545;
 }
-
 /* Selection */
+
+/* Color */
+.type-checkbox-task {
+  background-color: var(--type-checkbox-task-unchecked-color) !important;
+}
+
+.type-checkbox-method {
+  background-color: var(--type-checkbox-method-unchecked-color) !important;
+}
+
+.type-checkbox-metric {
+  background-color: var(--type-checkbox-metric-unchecked-color) !important;
+}
+
+.type-checkbox-material {
+  background-color: var(--type-checkbox-material-unchecked-color) !important;
+}
+
+.type-checkbox-other {
+  background-color: var(--type-checkbox-other-unchecked-color) !important;
+}
+
+.type-checkbox-generic {
+  background-color: var(--type-checkbox-generic-unchecked-color) !important;
+}
+/* Color */
 
 /* Extra small devices (portrait phones, less than 576px) */
 @media (max-width: 575.98px) {
@@ -244,11 +296,11 @@
     line-height: 20px;
     border-left: none;
     padding-right: 0;
-    font-size: 20px
+    font-size: 20px;
   }
 
   .textarea_placeholder_text>span {
-    font-size: 16px
+    font-size: 16px;
   }
 }
 
@@ -256,20 +308,20 @@
 @media (min-width: 768px) and (max-width: 991.98px) {
   .textarea_placeholder_text {
     left: 20px;
-    right: 20px
+    right: 20px;
   }
 }
 
 /* Large devices (desktops, 992px and up) */
 @media (min-width: 992px) and (max-width: 1199.98px) {
   .textarea_placeholder_text {
-    font-size: 26px
+    font-size: 26px;
   }
 }
 
 /* Extra large devices (large desktops, 1200px and up) */
 @media (min-width: 1200px) {
   .textarea_placeholder_text {
-    font-size: 26px
+    font-size: 26px;
   }
 }
