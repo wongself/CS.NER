@@ -256,6 +256,13 @@ textarea {
 }
 /* Selection */
 
+/* Spinner */
+.spinner-border-sm {
+  width: 0.9rem;
+  height: 0.9rem;
+}
+/* Spinner */
+
 /* Color */
 .type-checkbox-task {
   background-color: var(--type-checkbox-task-unchecked-color) !important;

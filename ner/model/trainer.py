@@ -37,6 +37,7 @@ class BaseTrainer:
 
         self._model_type = self._args.get('model', 'model_type')
         self._model_path = self._args.get('model', 'model_path')
+        self._gpu = self._args.getint('model', 'gpu')
         self._cpu = self._args.getboolean('model', 'cpu')
         self._eval_batch_size = self._args.getint('model', 'eval_batch_size')
         self._max_pairs = self._args.getint('model', 'max_pairs')
@@ -63,8 +64,9 @@ class BaseTrainer:
 
         # CUDA devices
         self._device = torch.device(
-            "cuda" if torch.cuda.is_available() and not self._cpu else "cpu")
-        # self._gpu_count = torch.cuda.device_count()
+            'cuda:' + str(self._gpu) if torch.cuda.is_available()
+            and not self._cpu else 'cpu')
+        self._gpu_count = torch.cuda.device_count()
 
 
 class SpanTrainer(BaseTrainer):
@@ -99,10 +101,10 @@ class SpanTrainer(BaseTrainer):
             size_embedding=self._size_embedding,
             freeze_transformer=self._freeze_transformer)
 
-        # If you still want to peadict Spans on multiple GPUs, uncomment the following lines
+        # If you want to peadict Spans on multiple GPUs, uncomment the following lines
         # # parallelize model
-        # if self._device.type != 'cpu':
-        #     self._model = torch.nn.DataParallel(self._model)
+        # if self._device.type != 'cpu' and self._gpu_count > 1:
+        #     self._model = torch.nn.DataParallel(self._model, device_ids=[0,])
         self._model.to(self._device)
 
         # path to export predictions to

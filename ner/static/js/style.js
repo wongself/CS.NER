@@ -117,7 +117,7 @@ $(function () {
       },
       dataType: 'json',
       success: function (ret) {
-        // console.log(ret)
+        // console.log(ret['jpredictions'])
         var jpredictions = ret['jpredictions']
         target_original_jpredictions = jpredictions
         target_texarea_text = _parse_jpredictions(jpredictions)
