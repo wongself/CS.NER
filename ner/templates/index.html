@@ -87,7 +87,7 @@
           <!-- Translate Button -->
 
           <!-- Type Checkbox Group -->
-          <div class="btn-group btn-group-sm type_checkbox_group ml-auto" data-toggle="buttons">
+          <div class="btn-group btn-group-sm type_checkbox_group ml-auto" id="type_inline_group" data-toggle="buttons">
             <label class="btn form-check-label type_checkbox_task">
               <input class="form-check-input" type="checkbox" autocomplete="off" checked>
               Task
@@ -114,13 +114,30 @@
             </label>
           </div>
           <!-- Type Checkbox Group -->
+
+          <!-- Type Checkbox Group -->
+          <div class="btn-group btn-group-sm dropleft type_checkbox_group ml-auto" id="type_dropdown_group" role="group">
+            <button id="type_dropdown_btn" type="button" class="btn btn-primary dropdown-toggle d-flex align-items-center mr-0" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+              Types
+            </button>
+            <div class="dropdown-menu" aria-labelledby="type_dropdown_btn">
+              <button class="dropdown-item" type="button">Task</button>
+              <button class="dropdown-item" type="button">Method</button>
+              <button class="dropdown-item" type="button">Metric</button>
+              <button class="dropdown-item" type="button">Material</button>
+              <button class="dropdown-item" type="button">Other</button>
+              <button class="dropdown-item" type="button">Generic</button>
+            </div>
+          </div>
+          <!-- Type Checkbox Group -->
         </div>
       </div>
       <!-- Language -->
 
       <!-- Textarea -->
       <div class="row row_recognizer">
-        <div class="col-6 inner_textarea_container">
+        <div class="col-12 col-md-6 inner_textarea_container" id="source_textarea_container">
           {% csrf_token %}
           <!-- Textarea -->
           <textarea name="source-texarea" class="form-control z-depth-1" id="source_texarea" rows="28" placeholder=""
@@ -152,7 +169,7 @@
           </span>
 
         </div>
-        <div class="col-6 inner_textarea_container">
+        <div class="col-12 col-md-6 inner_textarea_container" id="target_textarea_container">
           <!-- Textarea -->
           <!-- <textarea name="target-texarea" class="form-control z-depth-1" id="target_texarea" rows="28" placeholder=" " maxlength="2000" readonly="readonly"></textarea> -->
           <div class="card target_card">

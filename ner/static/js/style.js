@@ -65,18 +65,10 @@ $(function () {
     $('#upload_doc_input').trigger('click')
   });
 
-  $('#upload_doc_input').on('change', function () {
-    console.log('file input')
-    var fileInput = ($('#upload_doc_input'))[0]
-    if (!fileInput.value) {
-      console.log('file no input')
-      return;
-    }
-
-    var file = fileInput.files[0]
-
-    console.log('文件: ' + file.name)
-    console.log('大小: ' + file.size)
+  $('#upload_doc_input').on('change', function (e) {
+    console.log('Document has been imported')
+    var doc = e.target.files[0]
+    console.log(doc)
   });
 
   $('.type_checkbox_group .btn').on('click', function (e) {

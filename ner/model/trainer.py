@@ -101,7 +101,7 @@ class SpanTrainer(BaseTrainer):
             size_embedding=self._size_embedding,
             freeze_transformer=self._freeze_transformer)
 
-        # If you want to peadict Spans on multiple GPUs, uncomment the following lines
+        # If you want to predict Spans on multiple GPUs, uncomment the following lines
         # # parallelize model
         # if self._device.type != 'cpu' and self._gpu_count > 1:
         #     self._model = torch.nn.DataParallel(self._model, device_ids=[0,])
