@@ -25,7 +25,9 @@ def create_directories_dir(d):
 def extend_tensor(tensor, extended_shape, fill=0):
     tensor_shape = tensor.shape
 
-    extended_tensor = torch.zeros(extended_shape, dtype=tensor.dtype).to(tensor.device)
+    extended_tensor = torch.zeros(
+        extended_shape,
+        dtype=tensor.dtype).to(tensor.device)
     extended_tensor = extended_tensor.fill_(fill)
 
     if len(tensor_shape) == 1:

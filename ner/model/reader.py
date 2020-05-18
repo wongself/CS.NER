@@ -14,7 +14,7 @@ class BaseInputReader(ABC):
     def __init__(
         self, types_path: str, tokenizer: BertTokenizer,
         neg_entity_count: int = None, max_span_size:
-        int = None, logger: Logger = None):
+        int = None, logger: Logger = None): # noqa
         types = json.load(open(types_path), object_pairs_hook=OrderedDict)
 
         self._entity_types = OrderedDict()
@@ -104,7 +104,7 @@ class JsonInputReader(BaseInputReader):
     def __init__(
         self, types_path: str, tokenizer: BertTokenizer,
         neg_entity_count: int = None, max_span_size: int = None,
-        logger: Logger = None):
+        logger: Logger = None): # noqa
         super().__init__(types_path, tokenizer, neg_entity_count, max_span_size, logger)
 
     def read(self, dataset_packages):

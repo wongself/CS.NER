@@ -1,17 +1,13 @@
-from django.views.decorators.csrf import csrf_exempt
+# from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render
 from django.http import JsonResponse
 
 from configparser import ConfigParser
 import nltk
-import os
 from tqdm import tqdm
 
 from ner.model.logger import NERLogger
-from ner.model.reader import JsonInputReader
 from ner.model.trainer import SpanTrainer
-
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 def index(request):
@@ -33,13 +29,8 @@ def entity_query(request):
             jdocument.append(doc)
         logger.info('Document Parsed:\n%s' % jdocument)
 
-        jpredictions = trainer.eval(jdoc=jdocument, input_reader_cls=JsonInputReader)
+        jpredictions = trainer.eval(jdoc=jdocument)
 
-        # predictions_path = os.path.join(BASE_DIR, 'data', 'predictions', 'scierc_pred.json')
-        # if not os.path.isfile(predictions_path):
-        #     raise TypeError(predictions_path + " does not exist")
-        # with open(predictions_path, 'r') as f:
-        #     jpredictions = json.load(f)
         return JsonResponse({'jpredictions': jpredictions})
     return render(request, './index.html')
 
@@ -49,7 +40,7 @@ logger = NERLogger(debug=False)
 
 # Parse configuration
 cfg = ConfigParser()
-configuration_path = os.path.join(BASE_DIR, 'configs', 'span_eval.conf')
+configuration_path = 'configs/span_eval.conf'
 cfg.read(configuration_path)
 logger.info('Configuration Parsed: %s' % cfg.sections())
 

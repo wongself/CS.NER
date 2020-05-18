@@ -13,7 +13,7 @@ class Evaluator:
     def __init__(
         self, dataset: Dataset, input_reader: JsonInputReader,
         text_encoder: BertTokenizer, no_overlapping: bool,
-        predictions_path: str, epoch: int, dataset_label: str):
+        predictions_path: str, epoch: int, dataset_label: str): # noqa
 
         self._text_encoder = text_encoder
         self._input_reader = input_reader
@@ -118,7 +118,7 @@ class Evaluator:
 
     def _convert_pred_entities(
         self, pred_types: torch.tensor, pred_spans: torch.tensor,
-        pred_scores: torch.tensor):
+        pred_scores: torch.tensor): # noqa
 
         converted_preds = []
 
@@ -158,7 +158,7 @@ class Evaluator:
 
     def _convert_by_setting(
         self, gt: List[List[Tuple]], pred: List[List[Tuple]],
-        include_entity_types: bool = True, include_score: bool = False):
+        include_entity_types: bool = True, include_score: bool = False): # noqa
 
         assert len(gt) == len(pred)
 
@@ -169,8 +169,10 @@ class Evaluator:
                 if type(t[0]) == int:  # entity
                     c = [t[0], t[1], self._pseudo_entity_type]
                 else:
-                    c = [(t[0][0], t[0][1], self._pseudo_entity_type),
-                        (t[1][0], t[1][1], self._pseudo_entity_type), t[2]]
+                    c = [
+                        (t[0][0], t[0][1], self._pseudo_entity_type),
+                        (t[1][0], t[1][1], self._pseudo_entity_type),
+                        t[2]]
             else:
                 c = list(t[:3])
 
@@ -190,7 +192,7 @@ class Evaluator:
 
     def _score(
         self, gt: List[List[Tuple]], pred: List[List[Tuple]],
-        print_results: bool = False):
+        print_results: bool = False): # noqa
         assert len(gt) == len(pred)
 
         gt_flat = []

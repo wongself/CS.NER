@@ -4,9 +4,6 @@ from transformers import BertConfig
 from transformers import BertModel
 from transformers import BertPreTrainedModel
 
-from ner.model import sampling
-from ner.model import util
-
 
 class Span(BertPreTrainedModel):
     """ Span-based model to extract entities """
@@ -14,7 +11,7 @@ class Span(BertPreTrainedModel):
     def __init__(
         self, config: BertConfig, cls_token: int, entity_types: int,
         size_embedding: int, prop_drop: float,
-        freeze_transformer: bool, max_pairs: int = 100):
+        freeze_transformer: bool, max_pairs: int = 100): # noqa
 
         super(Span, self).__init__(config)
 
@@ -43,7 +40,7 @@ class Span(BertPreTrainedModel):
     def _forward_eval(
         self, encodings: torch.tensor, context_masks: torch.tensor,
         entity_masks: torch.tensor, entity_sizes: torch.tensor,
-        entity_spans: torch.tensor, entity_sample_masks: torch.tensor):
+        entity_spans: torch.tensor, entity_sample_masks: torch.tensor): # noqa
         # get contextualized token embeddings from last transformer layer
         context_masks = context_masks.float()
         h = self.bert(input_ids=encodings, attention_mask=context_masks)[0]
@@ -94,8 +91,8 @@ def get_token(h: torch.tensor, x: torch.tensor, token: int):
 
     return token_h
 
-# Model access
 
+# Model access
 _MODELS = {
     'span': Span,
 }

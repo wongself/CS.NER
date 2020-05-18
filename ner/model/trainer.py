@@ -1,4 +1,5 @@
 import datetime
+import logging
 import math
 import os
 from tqdm import tqdm
@@ -15,7 +16,7 @@ from ner.model import sampling
 from ner.model import util
 from ner.model.entity import Dataset
 from ner.model.evaluator import Evaluator
-from ner.model.reader import JsonInputReader, BaseInputReader
+from ner.model.reader import JsonInputReader
 
 
 class BaseTrainer:
@@ -52,9 +53,13 @@ class BaseTrainer:
         self._log_path = os.path.join(self._log_path, self._label, timestamp)
         util.create_directories_dir(self._log_path)
 
-        # Console logging
+        # File & Console logging
         self._logger = logger
         self._logger.setLevel(self._debug)
+
+        file_handler = logging.FileHandler(os.path.join(self._log_path, 'all.log'))
+        file_handler.setFormatter(self._logger.log_formatter)
+        self._logger.addHandler(file_handler)
 
         # CUDA devices
         self._device = torch.device(
@@ -71,50 +76,53 @@ class SpanTrainer(BaseTrainer):
         self._tokenizer = BertTokenizer.from_pretrained(
             self._tokenizer_path, do_lower_case=self._lowercase)
 
-        # path to export predictions to
-        self._predictions_path = os.path.join(
-            self._log_path,
-            'predictions_%s_epoch_%s.json')
-
-        logger.info('os.getcwd(): ' + os.getcwd())
-
-    def eval(self, jdoc: list, input_reader_cls: BaseInputReader):
-        dataset_label = 'prediction'
-
-        self._logger.info("Model: %s" % self._model_type)
-
-        # read datasets
-        input_reader = input_reader_cls(
+        # Input reader
+        self._input_reader = JsonInputReader(
             self._types_path,
             self._tokenizer,
             max_span_size=self._max_span_size,
             logger=self._logger)
-        input_reader.read({dataset_label: jdoc})
-        self._log_datasets(input_reader)
 
         # Create model
         model_class = models.get_model(self._model_type)
 
         config = BertConfig.from_pretrained(self._model_path)
 
-        model = model_class.from_pretrained(
+        self._model = model_class.from_pretrained(
             self._model_path,
             config=config,
             # Span model parameters
             cls_token=self._tokenizer.convert_tokens_to_ids('[CLS]'),
-            entity_types=input_reader.entity_type_count,
+            entity_types=self._input_reader.entity_type_count,
             max_pairs=self._max_pairs,
             prop_drop=self._prop_drop,
             size_embedding=self._size_embedding,
             freeze_transformer=self._freeze_transformer)
 
-        model.to(self._device)
+        # If you still want to peadict Spans on multiple GPUs, uncomment the following lines
+        # # parallelize model
+        # if self._device.type != 'cpu':
+        #     self._model = torch.nn.DataParallel(self._model)
+        self._model.to(self._device)
+
+        # path to export predictions to
+        self._predictions_path = os.path.join(
+            self._log_path, 'predictions_%s_epoch_%s.json')
+
+    def eval(self, jdoc: list):
+        dataset_label = 'prediction'
+
+        self._logger.info("Model: %s" % self._model_type)
+
+        # Read datasets
+        self._input_reader.read({dataset_label: jdoc})
+        self._log_datasets()
 
         # evaluate
         jpredictions = self._eval(
-            model,
-            input_reader.get_dataset(dataset_label),
-            input_reader)
+            self._model,
+            self._input_reader.get_dataset(dataset_label),
+            self._input_reader)
 
         self._logger.info("Logged in: %s" % self._log_path)
 
@@ -122,8 +130,8 @@ class SpanTrainer(BaseTrainer):
 
     def _eval(
         self, model: torch.nn.Module,
-        dataset: Dataset, input_reader: JsonInputReader,
-        epoch: int = 0, updates_epoch: int = 0, iteration: int = 0):
+        dataset: Dataset, epoch: int = 0,
+        updates_epoch: int = 0, iteration: int = 0): # noqa
 
         self._logger.info("Evaluate: %s" % dataset.label)
 
@@ -133,7 +141,7 @@ class SpanTrainer(BaseTrainer):
 
         # create evaluator
         evaluator = Evaluator(
-            dataset, input_reader, self._tokenizer,
+            dataset, self._input_reader, self._tokenizer,
             self._no_overlapping, self._predictions_path,
             epoch, dataset.label)
 
@@ -173,16 +181,16 @@ class SpanTrainer(BaseTrainer):
 
         return jpredictions
 
-    def _log_datasets(self, input_reader):
-        self._logger.info("Entity type count: %s" % input_reader.entity_type_count)
+    def _log_datasets(self):
+        self._logger.info("Entity type count: %s" % self._input_reader.entity_type_count)
 
         self._logger.info("Entities:")
-        for e in input_reader.entity_types.values():
+        for e in self._input_reader.entity_types.values():
             self._logger.info(e.verbose_name + '=' + str(e.index))
 
-        for k, d in input_reader.datasets.items():
+        for k, d in self._input_reader.datasets.items():
             self._logger.info('Dataset: %s' % k)
             self._logger.info("Document count: %s" % d.document_count)
             self._logger.info("Entity count: %s" % d.entity_count)
 
-        self._logger.info("Context size: %s" % input_reader.context_size)
+        self._logger.info("Context size: %s" % self._input_reader.context_size)

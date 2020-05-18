@@ -228,16 +228,7 @@ function _export_jpredictions() {
 }
 
 function _generate_timestamp() {
-  var date = new Date();
-  var curr_month = _expand_digit(date.getMonth() + 1)
-  var curr_day = _expand_digit(date.getDate())
-  var curr_hour = _expand_digit(date.getHours())
-  var curr_min = _expand_digit(date.getMinutes())
-  var curr_sec = _expand_digit(date.getSeconds())
-  var seperator = "-";
-
-  var curr_time = date.getFullYear() + seperator + curr_month + seperator + curr_day + ' ' + curr_hour + '_' + curr_min + '_' + curr_sec
-
+  var curr_time = new Date().Format("yyyy-MM-dd hh_mm_ss")
   return curr_time
 };
 
@@ -248,6 +239,22 @@ function _expand_digit(digit) {
   }
   return digit_expanded
 };
+
+Date.prototype.Format = function (fmt) {
+  var o = {
+    "M+": this.getMonth() + 1,
+    "d+": this.getDate(),
+    "h+": this.getHours(),
+    "m+": this.getMinutes(),
+    "s+": this.getSeconds(),
+    "q+": Math.floor((this.getMonth() + 3) / 3),
+    "S": this.getMilliseconds()
+  };
+  if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+  for (var k in o)
+    if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+  return fmt;
+}
 
 NProgress.configure({ showSpinner: false });
 
