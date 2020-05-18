@@ -24,7 +24,6 @@ var type_none_color = 'transparent';
 //     $("#query_button").click();
 //   }
 // })
-
 var target_original_jpredictions
 
 $(function () {
@@ -81,10 +80,18 @@ $(function () {
   });
 
   $('.type_checkbox_group .btn').on('click', function (e) {
-    e.stopPropagation();
-    e.preventDefault();
+    // e.stopPropagation()
+    // e.preventDefault()
     var class_list = String($(this).attr("class"))
     console.log(class_list)
+  });
+
+  $('#export_output_button').on('click', function () {
+    if (target_original_jpredictions == null) {
+      $('#export_check_modal').modal();
+      return;
+    }
+    _export_jpredictions()
   });
 
   $('#query_button').on('click', function () {
@@ -198,6 +205,49 @@ function _get_type_color(index) {
       return 'none'
   }
 }
+
+function _export_jpredictions() {
+  var jexport = JSON.stringify(target_original_jpredictions)
+  jexport = [jexport]
+  var blob = new Blob(jexport, { type: "text/plain;charset=utf-8" });
+  var filename = 'Predictions ' + _generate_timestamp() + '.json'
+
+  var isIE = false || !!document.documentMode;
+  if (isIE) {
+    window.navigator.msSaveBlob(blob, filename);
+  } else {
+    var url = window.URL || window.webkitURL;
+    link = url.createObjectURL(blob);
+    var a = $("<a />");
+    a.attr("download", filename);
+    a.attr("href", link);
+    $("body").append(a);
+    a[0].click();
+    $("body").remove(a);
+  }
+}
+
+function _generate_timestamp() {
+  var date = new Date();
+  var curr_month = _expand_digit(date.getMonth() + 1)
+  var curr_day = _expand_digit(date.getDate())
+  var curr_hour = _expand_digit(date.getHours())
+  var curr_min = _expand_digit(date.getMinutes())
+  var curr_sec = _expand_digit(date.getSeconds())
+  var seperator = "-";
+
+  var curr_time = date.getFullYear() + seperator + curr_month + seperator + curr_day + ' ' + curr_hour + '_' + curr_min + '_' + curr_sec
+
+  return curr_time
+};
+
+function _expand_digit(digit) {
+  var digit_expanded
+  if (digit >= 1 && digit <= 9) {
+    digit_expanded = "0" + digit;
+  }
+  return digit_expanded
+};
 
 NProgress.configure({ showSpinner: false });
 

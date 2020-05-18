@@ -23,6 +23,12 @@ class NERLogger:
     def info(self, message: str):
         self._logger.info(message)
 
+    def setLevel(self, debug: bool):
+        if debug:
+            self._logger.setLevel(logging.DEBUG)
+        else:
+            self._logger.setLevel(logging.INFO)
+
     def _reset_logger(self):
         for handler in self._logger.handlers[:]:
             self._logger.removeHandler(handler)
