@@ -25,11 +25,11 @@ var type_none_color = 'transparent';
 //   }
 // })
 
+var target_original_jpredictions
+
 $(function () {
   $('#source_texarea').val('')
-  console.log($('#target_texarea').html().length)
-  console.log($('#target_texarea').text().length)
-  // $('#target_texarea').html('')
+  $('#target_texarea').html('')
 
   $('#source_texarea').bind('input propertychange', function () {
     var $text_src = $('#source_texarea')
@@ -63,7 +63,7 @@ $(function () {
   })
 
   $('#upload_doc_button').on('click', function () {
-    $('#upload_doc_input').trigger('click');
+    $('#upload_doc_input').trigger('click')
   });
 
   $('#upload_doc_input').on('change', function () {
@@ -74,10 +74,17 @@ $(function () {
       return;
     }
 
-    var file = fileInput.files[0];
+    var file = fileInput.files[0]
 
     console.log('文件: ' + file.name)
     console.log('大小: ' + file.size)
+  });
+
+  $('.type_checkbox_group .btn').on('click', function (e) {
+    e.stopPropagation();
+    e.preventDefault();
+    var class_list = String($(this).attr("class"))
+    console.log(class_list)
   });
 
   $('#query_button').on('click', function () {
@@ -98,17 +105,17 @@ $(function () {
       type: 'post',
       url: './../entity_query/',
       data: {
-        'input': text_src,
+        'source': text_src,
         csrfmiddlewaretoken: $('[name="csrfmiddlewaretoken"]').val()
       },
       dataType: 'json',
       success: function (ret) {
         // console.log(ret)
         var jpredictions = ret['jpredictions']
+        target_original_jpredictions = jpredictions
         target_texarea_text = _parse_jpredictions(jpredictions)
         $('#target_texarea').html('')
         $('#target_texarea').html(target_texarea_text)
-        _highlight_jpredictions()
         $('#query_button').html('Recognize').removeClass('disabled');
       },
       error: function (ret) {
@@ -121,13 +128,14 @@ $(function () {
 
 function _parse_jpredictions(jpredictions) {
   console.log('Start Parsing')
-  console.log(jpredictions)
+  // console.log(jpredictions)
   var target_texarea_text = ''
   $.each(jpredictions, function (index, doc) {
     var jtokens = doc['tokens']
     var jentities = doc['entities']
     var index_tokens_type = (new Array(jtokens.length)).fill(1)
-    console.log(jentities.slice(2))
+
+    target_texarea_text += '<p>'
     $.each(jentities, function (index, entity) {
       var etype = entity['type']
       var estart = entity['start']
@@ -147,10 +155,9 @@ function _parse_jpredictions(jpredictions) {
 
       target_texarea_text += '<span class="' + tokens_type_color + '">' + token + '</span>'
     })
-    // target_texarea_text = target_texarea_text.slice(0, -1)
-    target_texarea_text += '<br>'
+    target_texarea_text += '</p>'
   })
-  console.log(target_texarea_text)
+  // console.log(target_texarea_text)
   return target_texarea_text
 }
 
@@ -190,37 +197,6 @@ function _get_type_color(index) {
     default:
       return 'none'
   }
-}
-
-function _highlight_jpredictions() {
-  console.log('Start highlighting')
-  $('#target_texarea').highlightWithinTextarea({
-    highlight: 'Japanese'
-  });
-}
-
-function change_color() {
-  console.log('change_color')
-  var loc, org, per;
-  if ($("#checkbox_per").is(":checked"))
-    per = color_per;
-  else
-    per = color_none;
-
-  if ($("#checkbox_loc").is(":checked"))
-    loc = color_loc;
-  else
-    loc = color_none;
-
-  console.log($("#checkbox_org").is(":checked"))
-  if ($("#checkbox_org").is(":checked"))
-    org = color_org;
-  else
-    org = color_none;
-  console.log(org)
-
-  var result = document.getElementById('result');
-  result.innerHTML = set_color(per, loc, org);
 }
 
 NProgress.configure({ showSpinner: false });
