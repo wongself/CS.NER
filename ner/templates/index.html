@@ -62,8 +62,8 @@
     <!-- Panel layout -->
     <div class="container page_panel">
       <!-- Language -->
-      <div class="row row_language mt-3 mb-2">
-        <div class="col-12 d-flex">
+      <div class="row row_language mt-3 mb-0">
+        <div class="col-12 d-flex language_col">
           <!-- Language Dropdown -->
           <div class="dropdown">
             <!--Trigger-->
@@ -116,24 +116,64 @@
           <!-- Type Checkbox Group -->
 
           <!-- Type Checkbox Group -->
-          <div class="btn-group btn-group-sm dropleft type_checkbox_group ml-auto" id="type_dropdown_group" role="group">
-            <button id="type_dropdown_btn" type="button" class="btn btn-primary dropdown-toggle d-flex align-items-center mr-0" data-toggle="dropdown"
-              aria-haspopup="true" aria-expanded="false">
+          <!-- <button type="button" class="btn btn-sm btn-primary waves-effect ml-auto mr-0" id="type_dropdown_btn">
+            <i class="fas fa-caret-down fa-sm"></i>
+            Types
+          </button> -->
+          <!-- Type Checkbox Group -->
+
+          <!-- Collapse buttons -->
+          <div class="ml-auto mr-0">
+            <button class="btn btn-sm btn-primary waves-effect" type="button" id="type_dropdown_btn"
+              data-toggle="collapse" data-target="#type_checkbox_collapse" aria-expanded="false"
+              aria-controls="type_checkbox_collapse">
+              <i class="fas fa-caret-down fa-sm"></i>
               Types
             </button>
-            <div class="dropdown-menu" aria-labelledby="type_dropdown_btn">
-              <button class="dropdown-item" type="button">Task</button>
-              <button class="dropdown-item" type="button">Method</button>
-              <button class="dropdown-item" type="button">Metric</button>
-              <button class="dropdown-item" type="button">Material</button>
-              <button class="dropdown-item" type="button">Other</button>
-              <button class="dropdown-item" type="button">Generic</button>
-            </div>
           </div>
-          <!-- Type Checkbox Group -->
+          <!-- / Collapse buttons -->
         </div>
+
       </div>
       <!-- Language -->
+
+      <div class="row row_language row_collapse mx-0 mb-3">
+        <div class="col-12 d-flex language_col">
+          <div class="collapse" id="type_checkbox_collapse">
+            <div class="card card-body p-0">
+              <!-- Type Checkbox Group -->
+              <div class="btn-group btn-group-sm type_checkbox_group ml-auto" id="type_collapse_group"
+                data-toggle="buttons">
+                <label class="btn form-check-label type_checkbox_task ml-0">
+                  <input class="form-check-input" type="checkbox" autocomplete="off" checked>
+                  Task
+                </label>
+                <label class="btn form-check-label type_checkbox_method">
+                  <input class="form-check-input" type="checkbox" autocomplete="off" checked>
+                  Method
+                </label>
+                <label class="btn form-check-label type_checkbox_metric">
+                  <input class="form-check-input" type="checkbox" autocomplete="off" checked>
+                  Metric
+                </label>
+                <label class="btn form-check-label type_checkbox_material">
+                  <input class="form-check-input" type="checkbox" autocomplete="off" checked>
+                  Material
+                </label>
+                <label class="btn form-check-label type_checkbox_other">
+                  <input class="form-check-input" type="checkbox" autocomplete="off" checked>
+                  Other
+                </label>
+                <label class="btn form-check-label type_checkbox_generic mr-0">
+                  <input class="form-check-input" type="checkbox" autocomplete="off" checked>
+                  Generic
+                </label>
+              </div>
+              <!-- Type Checkbox Group -->
+            </div>
+          </div>
+        </div>
+      </div>
 
       <!-- Textarea -->
       <div class="row row_recognizer">
@@ -255,15 +295,15 @@
   </footer>
   <!-- Footer -->
 
-  <!-- No Input Modal -->
-  <div class="modal fade" id="source_check_modal" tabindex="-1" role="dialog">
+  <!-- Error Modal -->
+  <div class="modal fade" id="error_happened_modal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-dialog-centered modal-sm modal-notify modal-danger" role="document">
 
       <!--Content-->
       <div class="modal-content text-center">
         <!--Header-->
         <div class="modal-header d-flex justify-content-center">
-          <p class="heading">Enter at least one character</p>
+          <p class="heading" id="modal_error_content">Error happened, Try again.</p>
         </div>
 
         <!--Body-->
@@ -283,75 +323,7 @@
 
     </div>
   </div>
-  <!-- No Input Modal -->
-
-  <!-- No Input Modal -->
-  <div class="modal fade" id="export_check_modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-dialog-centered modal-sm modal-notify modal-danger" role="document">
-
-      <!--Content-->
-      <div class="modal-content text-center">
-        <!--Header-->
-        <div class="modal-header d-flex justify-content-center">
-          <p class="heading">No predictions can be exported</p>
-        </div>
-
-        <!--Body-->
-        <div class="modal-body">
-          <i class="fas fa-times fa-4x animated rotateIn"></i>
-        </div>
-
-        <!--Footer-->
-        <div class="modal-footer d-flex justify-content-center">
-          <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">
-            OK
-          </button>
-        </div>
-        <!--Footer-->
-      </div>
-      <!--Content-->
-
-    </div>
-  </div>
-  <!-- No Input Modal -->
-
-  <!-- No Input Modal -->
-  <div class="modal fade" id="document_upload_modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-dialog-centered modal-sm modal-notify modal-danger" role="document">
-
-      <!--Content-->
-      <div class="modal-content text-center">
-        <!--Header-->
-        <div class="modal-header d-flex justify-content-center">
-          <p class="heading">Uploading error. Check the following</p>
-        </div>
-
-        <!--Body-->
-        <div class="modal-body">
-          <i class="fas fa-times fa-4x animated rotateIn"></i>
-          <ul>
-            <li>
-              Document size needs to be less than 1MB
-            </li>
-            <li>
-              Currently only supports English documents
-            </li>
-          </ul>
-        </div>
-
-        <!--Footer-->
-        <div class="modal-footer d-flex justify-content-center">
-          <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">
-            OK
-          </button>
-        </div>
-        <!--Footer-->
-      </div>
-      <!--Content-->
-
-    </div>
-  </div>
-  <!-- No Input Modal -->
+  <!-- Error Modal -->
 
   <!-- jQuery -->
   <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>

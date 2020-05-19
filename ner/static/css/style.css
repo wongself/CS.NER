@@ -38,14 +38,22 @@
 /* Page */
 
 /* Language & Translate */
-#language_select_dropmenu {
+.row_language {
   font-family: "Open Sans", sans-serif;
 }
 
+.language_col {
+  position: relative;
+}
+
 .dropdown-item {
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-  font-family: "Open Sans", sans-serif;
+  padding-top: 0.4rem;
+  padding-bottom: 0.4rem;
+}
+
+#type_dropdown_btn {
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
 }
 /* Language */
 
@@ -58,7 +66,6 @@
   margin-top: auto;
   margin-bottom: auto;
   padding: 0.25rem 0.8rem;
-  font-family: "Open Sans", sans-serif;
 }
 
 .type_checkbox_group .btn:focus,
@@ -358,7 +365,7 @@ textarea {
     font-size: 26px;
   }
 
-  #type_dropdown_group {
+  #type_dropdown_btn {
     display: none;
   }
 }
@@ -369,7 +376,7 @@ textarea {
     font-size: 26px;
   }
 
-  #type_dropdown_group {
+  #type_dropdown_btn {
     display: none;
   }
 }

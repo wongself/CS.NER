@@ -30,6 +30,7 @@ $(function () {
   $('#source_texarea').val('')
   $('#target_texarea').html('')
 
+  // Textarea discription
   $('#source_texarea').bind('input propertychange', function () {
     var $text_src = $('#source_texarea')
     var $text_dst = $('#target_texarea')
@@ -61,6 +62,7 @@ $(function () {
     }
   })
 
+  // Upload document
   $('#upload_doc_button').on('click', function () {
     $('#upload_doc_input').trigger('click')
   });
@@ -71,6 +73,18 @@ $(function () {
     console.log(doc)
   });
 
+  // Export predictions
+  $('#export_output_button').on('click', function () {
+    if (target_original_jpredictions == null) {
+      var $modal = $('#error_happened_modal #modal_error_content')
+      $modal.text('No predictions available.')
+      $('#error_happened_modal').modal();
+      return;
+    }
+    _export_jpredictions()
+  });
+
+  // Type checkbox
   $('.type_checkbox_group .btn').on('click', function (e) {
     // e.stopPropagation()
     // e.preventDefault()
@@ -78,20 +92,25 @@ $(function () {
     console.log(class_list)
   });
 
-  $('#export_output_button').on('click', function () {
-    if (target_original_jpredictions == null) {
-      $('#export_check_modal').modal();
-      return;
-    }
-    _export_jpredictions()
+  $('#type_dropdown_btn').on('click', function () {
+    // var $type_inline_group = $('#type_inline_group')
+    // var is_dropdown_display = $type_inline_group.css('display')
+    // if (is_dropdown_display === 'none') {
+    //   $type_inline_group.css('display', 'inline-flex')
+    // } else {
+    //   $type_inline_group.css('display', 'none')
+    // }
   });
 
+  // Recognize entities
   $('#query_button').on('click', function () {
     var $text_src = $('#source_texarea')
     var text_src = $text_src.val();
 
     if (text_src.length <= 0) {
-      $('#source_check_modal').modal();
+      var $modal = $('#error_happened_modal #modal_error_content')
+      $modal.text('No text or document available.')
+      $('#error_happened_modal').modal();
       return;
     }
 
@@ -194,29 +213,23 @@ function _get_type_color(index) {
     case 13:
       return 'type-checkbox-generic'
     default:
-      return 'none'
+      return 'type-checkbox-none'
   }
 }
 
 function _export_jpredictions() {
   var jexport = JSON.stringify(target_original_jpredictions)
-  jexport = [jexport]
-  var blob = new Blob(jexport, { type: "text/plain;charset=utf-8" });
+  var blob = new Blob([jexport], { type: "text/plain;charset=utf-8" });
   var filename = 'Predictions ' + _generate_timestamp() + '.json'
 
-  var isIE = false || !!document.documentMode;
-  if (isIE) {
-    window.navigator.msSaveBlob(blob, filename);
-  } else {
-    var url = window.URL || window.webkitURL;
-    link = url.createObjectURL(blob);
-    var a = $("<a />");
-    a.attr("download", filename);
-    a.attr("href", link);
-    $("body").append(a);
-    a[0].click();
-    $("body").remove(a);
-  }
+  var url = window.URL || window.webkitURL;
+  link = url.createObjectURL(blob);
+  var a = $("<a />");
+  a.attr("download", filename);
+  a.attr("href", link);
+  $("body").append(a);
+  a[0].click();
+  $("body").remove(a);
 }
 
 function _generate_timestamp() {
@@ -257,3 +270,59 @@ $(document).ajaxStart(function () {
 $(document).ajaxStop(function () {
   NProgress.done();
 });
+
+$("#fsdhkfjhsdkjf").on("change", function (e) {
+  var file = e.target.files[0];
+  var fileReader = new FileReader();
+
+  fileReader.onload = function () {
+    var typedarray = new Uint8Array(this.result);
+    getText(typedarray).then(function (text) {
+      $("#content").html(text);
+    }, function (reason)
+    {
+      alert('Seems this file is broken, please upload another file');
+      console.error(reason);
+    });
+
+    //getText() function definition. This is the pdf reader function.
+    function getText(typedarray) {
+
+      //PDFJS should be able to read this typedarray content
+
+      var pdf = PDFJS.getDocument(typedarray);
+      return pdf.then(function (pdf) {
+
+        // get all pages text
+        var maxPages = pdf.pdfInfo.numPages;
+        var countPromises = [];
+        // collecting all page promises
+        for (var j = 1; j <= maxPages; j++) {
+          var page = pdf.getPage(j);
+
+          var txt = "";
+          countPromises.push(page.then(function (page) {
+            // add page promise
+            var textContent = page.getTextContent();
+
+            return textContent.then(function (text) {
+              // return content promise
+              return text.items.map(function (s) {
+                return s.str;
+              }).join(''); // value page text
+            });
+          }));
+        }
+
+        // Wait for all pages and join text
+        return Promise.all(countPromises).then(function (texts) {
+          return texts.join('');
+        });
+      });
+    }
+  };
+  //Read the file as ArrayBuffer
+  fileReader.readAsArrayBuffer(file);
+
+});
+
