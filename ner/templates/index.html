@@ -62,7 +62,7 @@
     <!-- Panel layout -->
     <div class="container page_panel">
       <!-- Language -->
-      <div class="row row_language mt-3 mb-0">
+      <div class="row row_language mt-3 mb-1">
         <div class="col-12 d-flex language_col">
           <!-- Language Dropdown -->
           <div class="dropdown">
@@ -115,18 +115,10 @@
           </div>
           <!-- Type Checkbox Group -->
 
-          <!-- Type Checkbox Group -->
-          <!-- <button type="button" class="btn btn-sm btn-primary waves-effect ml-auto mr-0" id="type_dropdown_btn">
-            <i class="fas fa-caret-down fa-sm"></i>
-            Types
-          </button> -->
-          <!-- Type Checkbox Group -->
-
           <!-- Collapse buttons -->
-          <div class="ml-auto mr-0">
-            <button class="btn btn-sm btn-primary waves-effect" type="button" id="type_dropdown_btn"
-              data-toggle="collapse" data-target="#type_checkbox_collapse" aria-expanded="false"
-              aria-controls="type_checkbox_collapse">
+          <div class="ml-auto mr-0" id="type_collapse_group">
+            <button class="btn btn-sm btn-primary waves-effect mr-0" type="button"
+              data-toggle="collapse" data-target="#type_checkbox_collapse" aria-expanded="false" aria-controls="type_checkbox_collapse">
               <i class="fas fa-caret-down fa-sm"></i>
               Types
             </button>
@@ -137,36 +129,42 @@
       </div>
       <!-- Language -->
 
-      <div class="row row_language row_collapse mx-0 mb-3">
-        <div class="col-12 d-flex language_col">
+      <div class="row row_language row_collapse mx-0 mb-2">
+        <div class="col-12 d-flex justify-content-center language_col">
           <div class="collapse" id="type_checkbox_collapse">
             <div class="card card-body p-0">
               <!-- Type Checkbox Group -->
-              <div class="btn-group btn-group-sm type_checkbox_group ml-auto" id="type_collapse_group"
+              <div class="btn-group btn-group-sm type_checkbox_group ml-auto"
                 data-toggle="buttons">
                 <label class="btn form-check-label type_checkbox_task ml-0">
                   <input class="form-check-input" type="checkbox" autocomplete="off" checked>
-                  Task
+                  <span class="type_checkbox_text verbose">Task</span>
+                  <span class="type_checkbox_text shortcut">T</span>
                 </label>
                 <label class="btn form-check-label type_checkbox_method">
                   <input class="form-check-input" type="checkbox" autocomplete="off" checked>
-                  Method
+                  <span class="type_checkbox_text verbose">Method</span>
+                  <span class="type_checkbox_text shortcut">Md</span>
                 </label>
                 <label class="btn form-check-label type_checkbox_metric">
                   <input class="form-check-input" type="checkbox" autocomplete="off" checked>
-                  Metric
+                  <span class="type_checkbox_text verbose">Metric</span>
+                  <span class="type_checkbox_text shortcut">Mc</span>
                 </label>
                 <label class="btn form-check-label type_checkbox_material">
                   <input class="form-check-input" type="checkbox" autocomplete="off" checked>
-                  Material
+                  <span class="type_checkbox_text verbose">Material</span>
+                  <span class="type_checkbox_text shortcut">Ml</span>
                 </label>
                 <label class="btn form-check-label type_checkbox_other">
                   <input class="form-check-input" type="checkbox" autocomplete="off" checked>
-                  Other
+                  <span class="type_checkbox_text verbose">Other</span>
+                  <span class="type_checkbox_text shortcut">O</span>
                 </label>
                 <label class="btn form-check-label type_checkbox_generic mr-0">
                   <input class="form-check-input" type="checkbox" autocomplete="off" checked>
-                  Generic
+                  <span class="type_checkbox_text verbose">Generic</span>
+                  <span class="type_checkbox_text shortcut">G</span>
                 </label>
               </div>
               <!-- Type Checkbox Group -->
@@ -180,7 +178,7 @@
         <div class="col-12 col-md-6 inner_textarea_container" id="source_textarea_container">
           {% csrf_token %}
           <!-- Textarea -->
-          <textarea name="source-texarea" class="form-control z-depth-1" id="source_texarea" rows="28" placeholder=""
+          <textarea name="source-texarea" class="form-control z-depth-1" id="source_texarea" rows="26" placeholder=""
             maxlength="2000" autofocus></textarea>
 
           <!-- Description -->
@@ -200,7 +198,7 @@
                 Upload Document
               </div>
             </button>
-            <input type="file" style="display:none;" id="upload_doc_input" accept=".txt, .doc, .docx">
+            <input type="file" style="display:none;" id="upload_doc_input" accept=".txt, .doc, .docx, .pdf">
           </span>
 
           <!-- Statistic -->
@@ -303,7 +301,7 @@
       <div class="modal-content text-center">
         <!--Header-->
         <div class="modal-header d-flex justify-content-center">
-          <p class="heading" id="modal_error_content">Error happened, Try again.</p>
+          <p class="heading" id="modal_error_content">Error happened, try again.</p>
         </div>
 
         <!--Body-->
@@ -335,6 +333,8 @@
   <script type="text/javascript" src="{% static 'js/mdb.min.js' %}"></script>
   <!-- Pragess Bar in Head of Page -->
   <script type="text/javascript" src="{% static 'js/nprogress.min.js' %}"></script>
+  <!-- PDF Reader in JavaScript -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/1.10.100/pdf.min.js"></script>
   <!-- Custom scripts (optional) -->
   <script type="text/javascript" src="{% static 'js/style.js' %}"></script>
 

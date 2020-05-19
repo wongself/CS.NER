@@ -1,17 +1,17 @@
 /* Variables */
 :root {
-  --type-checkbox-task-checked-color: #FFBF33;
-  --type-checkbox-task-unchecked-color: #FFE084;
-  --type-checkbox-method-checked-color: #B1BA24;
-  --type-checkbox-method-unchecked-color: #E4EA78;
-  --type-checkbox-metric-checked-color: #51C521;
-  --type-checkbox-metric-unchecked-color: #A9ED76;
-  --type-checkbox-material-checked-color: #1B9D96;
-  --type-checkbox-material-unchecked-color: #71E1C7;
-  --type-checkbox-other-checked-color: #1D6EB8;
-  --type-checkbox-other-unchecked-color: #71BBE7;
-  --type-checkbox-generic-checked-color: #AA52E5;
-  --type-checkbox-generic-unchecked-color: #DC97F7;
+  --type-checkbox-task-checked-color: #ef6b22;
+  --type-checkbox-task-unchecked-color: #cb7648;
+  --type-checkbox-method-checked-color: #ecc100;
+  --type-checkbox-method-unchecked-color: #bca22f;
+  --type-checkbox-metric-checked-color: #45b068;
+  --type-checkbox-metric-unchecked-color: #629372;
+  --type-checkbox-material-checked-color: #1882c5;
+  --type-checkbox-material-unchecked-color: #487693;
+  --type-checkbox-other-checked-color: #4c65ff;
+  --type-checkbox-other-unchecked-color: #7985d2;
+  --type-checkbox-generic-checked-color: #ee3768;
+  --type-checkbox-generic-unchecked-color: #cd5676;
 }
 
 /* Page */
@@ -51,9 +51,13 @@
   padding-bottom: 0.4rem;
 }
 
-#type_dropdown_btn {
+#type_collapse_group .btn {
   padding-left: 0.75rem;
   padding-right: 0.75rem;
+}
+
+.type_checkbox_text.shortcut {
+  display: none;
 }
 /* Language */
 
@@ -153,8 +157,20 @@
 }
 
 textarea {
-  padding: 0.65rem 0.75rem !important;
+  padding: 0.65rem 0.75rem 50px !important;
   resize: none;
+}
+
+#target_texarea p {
+  margin-bottom: 0.6rem;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.badge {
+  color: #222222 !important;
+  padding: 0.4em .4em;
+  font-size: 90%;
 }
 
 .inner_textarea_container {
@@ -227,9 +243,7 @@ textarea {
   line-height: inherit;
   font-size: 15px;
 }
-/* Widgets */
 
-/* Statistic */
 .textarea_statistic_text {
   display: block;
   position: absolute;
@@ -237,14 +251,14 @@ textarea {
   cursor: text;
   pointer-events: none;
   bottom: 15px;
-  right: 30px;
+  right: 35px;
   font-family: "Open Sans", sans-serif;
   font-weight: 300;
   font-size: inherit;
   line-height: inherit;
   font-size: 15px;
 }
-/* Statistic */
+/* Widgets */
 
 /* Selection */
 ::selection {
@@ -272,29 +286,43 @@ textarea {
 
 /* Color */
 .type-checkbox-task {
-  background-color: var(--type-checkbox-task-unchecked-color) !important;
+  background-color: var(--type-checkbox-task-checked-color);
 }
 
 .type-checkbox-method {
-  background-color: var(--type-checkbox-method-unchecked-color) !important;
+  background-color: var(--type-checkbox-method-checked-color);
 }
 
 .type-checkbox-metric {
-  background-color: var(--type-checkbox-metric-unchecked-color) !important;
+  background-color: var(--type-checkbox-metric-checked-color);
 }
 
 .type-checkbox-material {
-  background-color: var(--type-checkbox-material-unchecked-color) !important;
+  background-color: var(--type-checkbox-material-checked-color);
 }
 
 .type-checkbox-other {
-  background-color: var(--type-checkbox-other-unchecked-color) !important;
+  background-color: var(--type-checkbox-other-checked-color);
 }
 
 .type-checkbox-generic {
-  background-color: var(--type-checkbox-generic-unchecked-color) !important;
+  background-color: var(--type-checkbox-generic-checked-color);
+}
+
+.type-checkbox-none {
+  background-color: transparent !important;
 }
 /* Color */
+
+/* Extra small devices (portrait phones, less than 500px) */
+@media (max-width: 499.98px) {
+  .type_checkbox_text.shortcut {
+    display: block;
+  }
+  .type_checkbox_text.verbose {
+    display: none;
+  }
+}
 
 /* Extra small devices (portrait phones, less than 576px) */
 @media (max-width: 575.98px) {
@@ -365,7 +393,7 @@ textarea {
     font-size: 26px;
   }
 
-  #type_dropdown_btn {
+  #type_collapse_group {
     display: none;
   }
 }
@@ -376,7 +404,7 @@ textarea {
     font-size: 26px;
   }
 
-  #type_dropdown_btn {
+  #type_collapse_group {
     display: none;
   }
 }

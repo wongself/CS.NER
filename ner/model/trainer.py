@@ -191,8 +191,8 @@ class SpanTrainer(BaseTrainer):
             self._logger.info(e.verbose_name + '=' + str(e.index))
 
         for k, d in self._input_reader.datasets.items():
-            self._logger.info('Dataset: %s' % k)
-            self._logger.info("Document count: %s" % d.document_count)
-            self._logger.info("Entity count: %s" % d.entity_count)
+            self._logger.info('Document: %s' % k)
+            self._logger.info("Sentences count: %s" % d.document_count)
+            # self._logger.info("Entity count: %s" % d.entity_count)
 
         self._logger.info("Context size: %s" % self._input_reader.context_size)
