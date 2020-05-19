@@ -12,6 +12,8 @@
   --type-checkbox-other-unchecked-color: #7985d2;
   --type-checkbox-generic-checked-color: #ee3768;
   --type-checkbox-generic-unchecked-color: #cd5676;
+  --type-checkbox-overlap-color: #7e1b14;
+  --type-checkbox-none-color: transparent;
 }
 
 /* Page */
@@ -162,15 +164,20 @@ textarea {
 }
 
 #target_texarea p {
-  margin-bottom: 0.6rem;
+  margin-bottom: 1.0rem;
   font-size: 0.9rem;
-  line-height: 1.4;
+  line-height: 2.0;
 }
 
 .badge {
   color: #222222 !important;
   padding: 0.4em .4em;
   font-size: 90%;
+}
+
+.badge.overlap {
+  color: #dddddd !important;
+  background-color: var(--type-checkbox-task-checked-color);
 }
 
 .inner_textarea_container {
@@ -285,32 +292,36 @@ textarea {
 /* Spinner */
 
 /* Color */
-.type-checkbox-task {
+.type-color-task {
   background-color: var(--type-checkbox-task-checked-color);
 }
 
-.type-checkbox-method {
+.type-color-method {
   background-color: var(--type-checkbox-method-checked-color);
 }
 
-.type-checkbox-metric {
+.type-color-metric {
   background-color: var(--type-checkbox-metric-checked-color);
 }
 
-.type-checkbox-material {
+.type-color-material {
   background-color: var(--type-checkbox-material-checked-color);
 }
 
-.type-checkbox-other {
+.type-color-other {
   background-color: var(--type-checkbox-other-checked-color);
 }
 
-.type-checkbox-generic {
+.type-color-generic {
   background-color: var(--type-checkbox-generic-checked-color);
 }
 
-.type-checkbox-none {
-  background-color: transparent !important;
+.type-color-overlap {
+  background-color: var(--type-checkbox-overlap-color) !important;
+}
+
+.type-color-none {
+  background-color: transparent;
 }
 /* Color */
 

@@ -6,6 +6,8 @@ from configparser import ConfigParser
 import nltk
 from tqdm import tqdm
 
+import json
+
 from ner.model.logger import NERLogger
 from ner.model.trainer import SpanTrainer
 
@@ -30,6 +32,12 @@ def entity_query(request):
         logger.info('Document Parsed:\n%s' % jdocument)
 
         jpredictions = trainer.eval(jdoc=jdocument)
+        logger.info('Predictions:\n%s' % jpredictions)
+
+        # predictions_path = 'data/predictions/scierc_test.json'
+        # with open(predictions_path, 'r') as f:
+        #     jpredictions = json.load(f)
+        #     return JsonResponse({'jpredictions': jpredictions})
 
         return JsonResponse({'jpredictions': jpredictions})
     return render(request, './index.html')

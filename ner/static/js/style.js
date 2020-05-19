@@ -1,6 +1,15 @@
 var max_length = 2000
 var target_original_jpredictions
 
+var type_task_index = 5
+var type_method_index = 7
+var type_metric_index = 11
+var type_material_index = 13
+var type_other_index = 17
+var type_generic_index = 19
+var type_overlap_index = 35
+var type_none_index = 1
+
 // $('#source_texarea').bind('keypress', function (event) {
 //   if (event.keyCode == "13") {
 //     $("#query_button").click();
@@ -70,19 +79,26 @@ $(function () {
     var re_checkbox = /type_checkbox_\w+/g;
     var class_list = String($(this).attr("class"))
     var is_active = class_list.includes('active')
-    var type_class = class_list.match(re_checkbox)[0].replace(/_/g, '-')
-    var type_class_color = 'badge ' + type_class
-    var type_class_none = type_class + ' type-checkbox-none'
-    var texarea_src_html = $('#target_texarea').html()
 
+    var type_class_color = 'type-color-' + class_list.match(re_checkbox)[0].slice(14)
+    var type_class_none = type_class_color + '-none'
     var re_class_color = new RegExp(type_class_color, 'g')
     var re_class_none = new RegExp(type_class_none, 'g')
+
+    // var type_badge_color = 'badge'
+    // var type_badge_none = 'badge-none'
+    // var re_badge_color = new RegExp(type_badge_color, 'g')
+    // var re_badge_none = new RegExp(type_badge_none, 'g')
+
+    var texarea_src_html = $('#target_texarea').html()
     // console.log(texarea_src_html)
     var texarea_dst_html
     if (is_active) {
       texarea_dst_html = texarea_src_html.replace(re_class_color, type_class_none)
+      // texarea_dst_html = texarea_dst_html.replace(re_badge_color, type_badge_none)
     } else {
       texarea_dst_html = texarea_src_html.replace(re_class_none, type_class_color)
+      // texarea_dst_html = texarea_dst_html.replace(re_badge_none, type_badge_color)
     }
     // console.log(texarea_dst_html)
     $('#target_texarea').html(texarea_dst_html)
@@ -150,15 +166,19 @@ function _parse_jpredictions(jpredictions) {
     })
 
     target_texarea_text += '<p><span>'
-    // console.log(index_tokens_type)
+    console.log(index_tokens_type)
     $.each(jtokens, function (index, token) {
       var tokens_type_color = _get_type_color(index_tokens_type[index])
       var is_span = !index || index_tokens_type[index - 1] !== index_tokens_type[index]
-      var is_badge = (tokens_type_color !== 'type-checkbox-none') ? 'badge ' : ''
+      var is_before_overlap = index && (index_tokens_type[index] >= type_overlap_index && index_tokens_type[index - 1] < type_overlap_index)
+      var is_after_overlap = !index || (index_tokens_type[index-1] >= type_overlap_index && index_tokens_type[index] < type_overlap_index)
+      var is_badge = (tokens_type_color !== 'type-color-none') ? 'badge ' : ''
 
-      target_texarea_text += is_span ? '</span>' : ''
-      target_texarea_text += (_is_string_punctuation(token.substring(0,1)) || !index) ? '' : ' '
-      target_texarea_text += is_span ? '<span class="' + is_badge + tokens_type_color + '">' + token : token
+      target_texarea_text += (is_span && !is_before_overlap) ? '</span>' : ''
+      target_texarea_text += (is_span && is_after_overlap) ? '<span class="' + is_badge + tokens_type_color + '">' : ''
+      target_texarea_text += (_is_string_punctuation(token.substring(0, 1)) || !index) ? '' : ' '
+      target_texarea_text += (is_span && is_before_overlap) ? '</span>' : ''
+      target_texarea_text += (is_span && !is_after_overlap) ? '<span class="' + is_badge + tokens_type_color + '">' + token : token
     })
     target_texarea_text += '</span></p>'
   })
@@ -193,39 +213,71 @@ function _get_pdf_text(typedarray) {
 function _get_type_index(type) {
   switch (type) {
     case 'Task':
-      return 2
+      return type_task_index
     case 'Method':
-      return 3
-    case 'Material':
-      return 5
-    case 'OtherScientificTerm':
-      return 7
+      return type_method_index
     case 'Metric':
-      return 11
+      return type_metric_index
+    case 'Material':
+      return type_material_index
+    case 'OtherScientificTerm':
+      return type_other_index
     case 'Generic':
-      return 13
+      return type_generic_index
     default:
-      return 1
+      return type_none_index
   }
 }
 
 function _get_type_color(index) {
-  switch (index) {
-    case 2:
-      return 'type-checkbox-task'
-    case 3:
-      return 'type-checkbox-method'
-    case 5:
-      return 'type-checkbox-metric'
-    case 7:
-      return 'type-checkbox-material'
-    case 11:
-      return 'type-checkbox-other'
-    case 13:
-      return 'type-checkbox-generic'
-    default:
-      return 'type-checkbox-none'
+  var type_index_array = _decomposition_quality_factor(index)
+  if (type_index_array.length === 0) {
+    return 'type-color-none'
   }
+
+  var type_index_class = ''
+  $.each(type_index_array, function (index, type) {
+    if (index) {
+      type_index_class += ' '
+    }
+
+    switch (type) {
+      case type_task_index:
+        type_index_class += 'type-color-task'
+        break;
+      case type_method_index:
+        type_index_class += 'type-color-method'
+        break;
+      case type_metric_index:
+        type_index_class += 'type-color-metric'
+        break;
+      case type_material_index:
+        type_index_class += 'type-color-material'
+        break;
+      case type_other_index:
+        type_index_class += 'type-color-other'
+        break;
+      case type_generic_index:
+        type_index_class += 'type-color-generic'
+        break;
+      default:
+        break;
+    }
+  })
+
+  return type_index_class
+}
+
+function _decomposition_quality_factor(n) {
+  var n_array = []
+  for (var i = 5; i <= n; i++) {
+    if (n % i == 0) {
+      n_array.push(i)
+      n = n / i
+      i = 5
+    }
+  }
+  return n_array
 }
 
 function _export_jpredictions() {
@@ -261,10 +313,10 @@ function _is_string_punctuation(substring) {
   return punctuation.includes(substring)
 }
 
-function _is_string_left_bracket(substring) {
-  var left_bracket = ')[{'
-  return left_bracket.includes(substring)
-}
+// function _is_string_left_punctuation(substring) {
+//   var left_bracket = '([{'
+//   return left_bracket.includes(substring)
+// }
 
 function _undisplay_textarea_discription() {
   var $text_src = $('#source_texarea')

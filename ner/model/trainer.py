@@ -50,17 +50,17 @@ class BaseTrainer:
         self._types_path = self._args.get('input', 'types_path')
 
         # Logging
-        timestamp = str(datetime.datetime.now()).replace(' ', '_')
-        self._log_path = os.path.join(self._log_path, self._label, timestamp)
-        util.create_directories_dir(self._log_path)
+        # timestamp = str(datetime.datetime.now()).replace(' ', '_')
+        # self._log_path = os.path.join(self._log_path, self._label, timestamp)
+        # util.create_directories_dir(self._log_path)
 
         # File & Console logging
         self._logger = logger
         self._logger.setLevel(self._debug)
 
-        file_handler = logging.FileHandler(os.path.join(self._log_path, 'all.log'))
-        file_handler.setFormatter(self._logger.log_formatter)
-        self._logger.addHandler(file_handler)
+        # file_handler = logging.FileHandler(os.path.join(self._log_path, 'all.log'))
+        # file_handler.setFormatter(self._logger.log_formatter)
+        # self._logger.addHandler(file_handler)
 
         # CUDA devices
         self._device = torch.device(
