@@ -6,7 +6,8 @@ from configparser import ConfigParser
 import nltk
 from tqdm import tqdm
 
-import json
+# import json
+import datetime
 
 from ner.model.logger import NERLogger
 from ner.model.trainer import SpanTrainer
@@ -31,8 +32,13 @@ def entity_query(request):
             jdocument.append(doc)
         logger.info('Document Parsed:\n%s' % jdocument)
 
+        start_time = datetime.datetime.now()
+
         jpredictions = trainer.eval(jdoc=jdocument)
         logger.info('Predictions:\n%s' % jpredictions)
+
+        end_time = datetime.datetime.now()
+        logger.info('Predicting time : %d' % (end_time - start_time).seconds)
 
         # predictions_path = 'data/predictions/scierc_test.json'
         # with open(predictions_path, 'r') as f:

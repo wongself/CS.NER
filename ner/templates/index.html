@@ -179,7 +179,7 @@
           {% csrf_token %}
           <!-- Textarea -->
           <textarea name="source-texarea" class="form-control z-depth-1" id="source_texarea" rows="26" placeholder=""
-            maxlength="2000" autofocus></textarea>
+            maxlength="5000" autofocus></textarea>
 
           <!-- Description -->
           <span class="textarea_placeholder_text" id="source_texarea_placeholder_text">
@@ -203,13 +203,13 @@
 
           <!-- Statistic -->
           <span class="textarea_statistic_text">
-            <span id="textarea_statistic_current">0</span>/2000
+            <span id="textarea_statistic_current">0</span>/5000
           </span>
 
         </div>
         <div class="col-12 col-md-6 inner_textarea_container" id="target_textarea_container">
           <!-- Textarea -->
-          <!-- <textarea name="target-texarea" class="form-control z-depth-1" id="target_texarea" rows="28" placeholder=" " maxlength="2000" readonly="readonly"></textarea> -->
+          <!-- <textarea name="target-texarea" class="form-control z-depth-1" id="target_texarea" rows="28" placeholder=" " maxlength="5000" readonly="readonly"></textarea> -->
           <div class="card target_card">
             <div class="card-body target_card_body" id="target_texarea"></div>
           </div>
@@ -257,17 +257,13 @@
               <h3 class="font-weight-bold mb-4">CS.NER</h3>
 
               <p>
-                CS.NER, a span-based model for named entity recogniton that relies on the pre-trained Transformer
-                network SciBERT as its core. With strong negative sampling, span filtering, and a localized context
-                representation, a search over all spans in an input document becomes feasible. Span-based approaches
-                perform competitive to BILOU-based models and may be the more promising approach for future research due
-                to their ability to identify overlapping entities.
+                A modified, span-based model to NER in computer science, treating NER as a span arrangement task and designing a system consisting of embedding layer, sampling layer, feature layer, and classification layer. SciBERT effectively captures the contextual information of proprietary domain texts and improves the recognition effect of scientific literature. By taking advantage of the span-based model, it becomes easier to solve the problem of identifying nested entities.
               </p>
               <p>
-                In the future, we plan to investigate more elaborate features of context for entity classifiers.
+                By using the website, quick and accurate identification of specific entities in the scientific literature becomes possible, which provides a reliable and efficient tool for downstream tasks such as relationship extraction, knowledge graph, etc.
               </p>
 
-              <button type="button" class="btn btn-orange btn-rounded mx-0">Contact US</button>
+              <button type="button" class="btn btn-orange btn-rounded mx-0"><a style="text-decoration:none;color:white;" href="mailto:wongself@foxmail.com">Contact US</a></button>
 
             </div>
           </div>
