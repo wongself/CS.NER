@@ -1,7 +1,7 @@
 # 基于片段和预训练模型的计算机领域实体识别研究（Span-based Named Entity Recognition with Pre-trained Model）
 
-CS.NER的Django工程代码。你能在[此处](101.124.42.4:4789)分析科技文献。<br>
-Django code for CS.NER. You can analyse scientific texts [here](101.124.42.4:4789).
+CS.NER的Django工程代码。你能在[此处](http://101.124.42.4:4789/ "CS.NER")分析科技文献。<br>
+Django code for CS.NER. You can analyse scientific texts [here](http://101.124.42.4:4789/ "CS.NER").
 
 ![Model Architecture](https://i.imgur.com/VfpeRJL.png)
 
