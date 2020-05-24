@@ -1,10 +1,11 @@
-# Named Entity Recognition with Feature Engineering for Computer Science Literature
-PyTorch code for SpERT: "Span-based Entity and Relation Transformer". For a description of the model and experiments.
+# 基于片段和预训练模型的计算机领域实体识别研究（Span-based Named Entity Recognition with Pre-trained Model）
+
+CS.NER的Django工程代码。你能在[此处](101.124.42.4:4789)分析科技文献。
+Django code for CS.NER. You can analyse scientific texts [here](101.124.42.4:4789).
 
 ![Model Architecture](https://i.imgur.com/VfpeRJL.png)
 
-## Setup
-### Requirements
+## Requirements
 - Required
   - Python 3.6 or higher
   - PyTorch 1.4.0 or higher
@@ -12,21 +13,13 @@ PyTorch code for SpERT: "Span-based Entity and Relation Transformer". For a desc
   - tqdm 4.45.0 or higher
 
 ## Usage
-Fetch model checkpoints (best out of 5 runs for each dataset):
-```
-bash ./scripts/fetch_models.sh
-```
 
-Train CoNLL04 on train dataset, evaluate on dev dataset:
-```
-python ./spert.py train --config configs/example_train.conf
-```
+
+## Build on Your Own
+
 
 ## Notes
-- To train SpERT with SciBERT \[5\] download SciBERT from https://github.com/allenai/scibert (under "PyTorch HuggingFace Models") and set "model_path" and "tokenizer_path" in the config file to point to the SciBERT directory.
-- You can call "python ./spert.py train --help" or "python ./spert.py eval --help" for a description of training/evaluation arguments.
-- Please cite our paper when you use SpERT: <br/>
-Markus Eberts, Adrian Ulges. Span-based Joint Entity and Relation Extraction with Transformer Pre-training. 24th European Conference on Artificial Intelligence, 2020.
+
 
 ## References
 ```
