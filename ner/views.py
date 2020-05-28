@@ -40,11 +40,6 @@ def entity_query(request):
         end_time = datetime.datetime.now()
         logger.info('Predicting time : %d' % (end_time - start_time).seconds)
 
-        # predictions_path = 'data/predictions/scierc_test.json'
-        # with open(predictions_path, 'r') as f:
-        #     jpredictions = json.load(f)
-        #     return JsonResponse({'jpredictions': jpredictions})
-
         return JsonResponse({'jpredictions': jpredictions})
     return render(request, './index.html')
 
