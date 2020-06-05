@@ -110,9 +110,7 @@ class SpanTrainer(BaseTrainer):
 
         # evaluate
         jpredictions = self._eval(
-            self._model,
-            self._reader.get_dataset(dataset_label),
-            self._reader)
+            self._model, self._reader.get_dataset(dataset_label))
 
         self._logger.info("Logged in: %s" % self._log_path)
 
@@ -150,7 +148,7 @@ class SpanTrainer(BaseTrainer):
 
             # iterate batches
             total = math.ceil(dataset.document_count / self._eval_batch_size)
-            for batch in tqdm(data_loader, total=total, desc='Evaluate epoch %s' % 0):
+            for batch in tqdm(data_loader, total=total, desc='Evaluate epoch %s' % epoch):
                 # move batch to selected device
                 batch = util.to_device(batch, self._device)
 
