@@ -1,5 +1,3 @@
-import datetime
-import logging
 import math
 import os
 from tqdm import tqdm
@@ -25,42 +23,34 @@ class BaseTrainer:
         self._args = cfg
 
         # Arguments
-        self._tokenizer_path = self._args.get('preprocessing', 'tokenizer_path')
-        self._max_span_size = self._args.getint('preprocessing', 'max_span_size')
-        self._lowercase = self._args.getboolean('preprocessing', 'lowercase')
-        self._sampling_processes = self._args.getint('preprocessing', 'sampling_processes')
-        self._sampling_limit = self._args.getint('preprocessing', 'sampling_limit')
+        self._tokenizer_path = self._args.get(
+            'preprocessing', 'tokenizer_path')
+        self._max_span_size = self._args.getint(
+            'preprocessing', 'max_span_size')
+        self._lowercase = self._args.getboolean(
+            'preprocessing', 'lowercase')
+        self._sampling_processes = self._args.getint(
+            'preprocessing', 'sampling_processes')
 
-        self._label = self._args.get('logging', 'label')
+        # self._label = self._args.get('logging', 'label')
         self._log_path = self._args.get('logging', 'log_path')
-        self._debug = self._args.getboolean('logging', 'debug')
+        # self._debug = self._args.getboolean('logging', 'debug')
 
         self._model_type = self._args.get('model', 'model_type')
         self._model_path = self._args.get('model', 'model_path')
         self._gpu = self._args.getint('model', 'gpu')
         self._cpu = self._args.getboolean('model', 'cpu')
         self._eval_batch_size = self._args.getint('model', 'eval_batch_size')
-        self._max_pairs = self._args.getint('model', 'max_pairs')
         self._size_embedding = self._args.getint('model', 'size_embedding')
         self._prop_drop = self._args.getfloat('model', 'prop_drop')
         self._freeze_transformer = self._args.getboolean(
             'model', 'freeze_transformer')
-        self._no_overlapping = self._args.getboolean('model', 'no_overlapping')
+        self._no_overlapping = self._args.getboolean(
+            'model', 'no_overlapping')
 
         self._types_path = self._args.get('input', 'types_path')
 
-        # Logging
-        # timestamp = str(datetime.datetime.now()).replace(' ', '_')
-        # self._log_path = os.path.join(self._log_path, self._label, timestamp)
-        # util.create_directories_dir(self._log_path)
-
-        # File & Console logging
         self._logger = logger
-        self._logger.setLevel(self._debug)
-
-        # file_handler = logging.FileHandler(os.path.join(self._log_path, 'all.log'))
-        # file_handler.setFormatter(self._logger.log_formatter)
-        # self._logger.addHandler(file_handler)
 
         # CUDA devices
         self._device = torch.device(
@@ -95,7 +85,6 @@ class SpanTrainer(BaseTrainer):
             # Span model parameters
             cls_token=self._tokenizer.convert_tokens_to_ids('[CLS]'),
             entity_types=self._reader.entity_type_count,
-            max_pairs=self._max_pairs,
             prop_drop=self._prop_drop,
             size_embedding=self._size_embedding,
             freeze_transformer=self._freeze_transformer)
@@ -161,7 +150,7 @@ class SpanTrainer(BaseTrainer):
 
             # iterate batches
             total = math.ceil(dataset.document_count / self._eval_batch_size)
-            for batch in tqdm(data_loader, total=total, desc='Evaluate epoch %s' % epoch):
+            for batch in tqdm(data_loader, total=total, desc='Evaluate epoch %s' % 0):
                 # move batch to selected device
                 batch = util.to_device(batch, self._device)
 

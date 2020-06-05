@@ -43,13 +43,13 @@ def entity_query(request):
     return render(request, './index.html')
 
 
-# Load logger
-logger = Logger(debug=False)
-
 # Parse configuration
 cfg = ConfigParser()
 configuration_path = 'configs/span_eval.conf'
 cfg.read(configuration_path)
+
+# Load logger
+logger = Logger(cfg)
 logger.info('Configuration Parsed: %s' % cfg.sections())
 
 trainer = SpanTrainer(cfg, logger)

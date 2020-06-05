@@ -123,3 +123,5 @@ dmypy.json
 
 # User customization
 /data
+/static
+/staticfiles

@@ -6,16 +6,7 @@ from ner.model import entity
 CSV_DELIMETER = ';'
 
 
-def create_directories_file(f):
-    d = os.path.dirname(f)
-
-    if d and not os.path.exists(d):
-        os.makedirs(d)
-
-    return f
-
-
-def create_directories_dir(d):
+def create_directory(d):
     if d and not os.path.exists(d):
         os.makedirs(d)
 

@@ -5,15 +5,14 @@ from transformers import BertModel
 from transformers import BertPreTrainedModel
 
 
-class Span(BertPreTrainedModel):
+class CSER(BertPreTrainedModel):
     """ Span-based model to extract entities """
 
     def __init__(
         self, config: BertConfig, cls_token: int, entity_types: int,
-        size_embedding: int, prop_drop: float,
-        freeze_transformer: bool, max_pairs: int = 100): # noqa
+        size_embedding: int, prop_drop: float, freeze_transformer: bool): # noqa
 
-        super(Span, self).__init__(config)
+        super(CSER, self).__init__(config)
 
         # BERT model
         self.bert = BertModel(config)
@@ -25,7 +24,6 @@ class Span(BertPreTrainedModel):
 
         self._cls_token = cls_token
         self._entity_types = entity_types
-        self._max_pairs = max_pairs
 
         # weight initialization
         self.init_weights()
@@ -94,7 +92,7 @@ def get_token(h: torch.tensor, x: torch.tensor, token: int):
 
 # Model access
 _MODELS = {
-    'span': Span,
+    'cser': CSER,
 }
 
 
