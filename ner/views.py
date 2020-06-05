@@ -6,10 +6,9 @@ from configparser import ConfigParser
 import nltk
 from tqdm import tqdm
 
-# import json
 import datetime
 
-from ner.model.logger import NERLogger
+from ner.model.logger import Logger
 from ner.model.trainer import SpanTrainer
 
 
@@ -45,7 +44,7 @@ def entity_query(request):
 
 
 # Load logger
-logger = NERLogger(debug=False)
+logger = Logger(debug=False)
 
 # Parse configuration
 cfg = ConfigParser()

@@ -2,7 +2,7 @@ import logging
 import sys
 
 
-class NERLogger:
+class Logger:
     def __init__(self, debug: bool):
         self._debug = debug
         self._log_formatter = logging.Formatter(

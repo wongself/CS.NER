@@ -79,11 +79,10 @@ class SpanTrainer(BaseTrainer):
             self._tokenizer_path, do_lower_case=self._lowercase)
 
         # Input reader
-        self._input_reader = JsonInputReader(
+        self._reader = JsonInputReader(
             self._types_path,
             self._tokenizer,
-            max_span_size=self._max_span_size,
-            logger=self._logger)
+            max_span_size=self._max_span_size)
 
         # Create model
         model_class = models.get_model(self._model_type)
@@ -95,7 +94,7 @@ class SpanTrainer(BaseTrainer):
             config=config,
             # Span model parameters
             cls_token=self._tokenizer.convert_tokens_to_ids('[CLS]'),
-            entity_types=self._input_reader.entity_type_count,
+            entity_types=self._reader.entity_type_count,
             max_pairs=self._max_pairs,
             prop_drop=self._prop_drop,
             size_embedding=self._size_embedding,
@@ -117,14 +116,14 @@ class SpanTrainer(BaseTrainer):
         self._logger.info("Model: %s" % self._model_type)
 
         # Read datasets
-        self._input_reader.read({dataset_label: jdoc})
+        self._reader.read({dataset_label: jdoc})
         self._log_datasets()
 
         # evaluate
         jpredictions = self._eval(
             self._model,
-            self._input_reader.get_dataset(dataset_label),
-            self._input_reader)
+            self._reader.get_dataset(dataset_label),
+            self._reader)
 
         self._logger.info("Logged in: %s" % self._log_path)
 
@@ -143,7 +142,7 @@ class SpanTrainer(BaseTrainer):
 
         # create evaluator
         evaluator = Evaluator(
-            dataset, self._input_reader, self._tokenizer,
+            dataset, self._reader, self._tokenizer,
             self._no_overlapping, self._predictions_path,
             epoch, dataset.label)
 
@@ -184,15 +183,15 @@ class SpanTrainer(BaseTrainer):
         return jpredictions
 
     def _log_datasets(self):
-        self._logger.info("Entity type count: %s" % self._input_reader.entity_type_count)
+        self._logger.info("Entity type count: %s" % self._reader.entity_type_count)
 
         self._logger.info("Entities:")
-        for e in self._input_reader.entity_types.values():
+        for e in self._reader.entity_types.values():
             self._logger.info(e.verbose_name + '=' + str(e.index))
 
-        for k, d in self._input_reader.datasets.items():
+        for k, d in self._reader.datasets.items():
             self._logger.info('Document: %s' % k)
             self._logger.info("Sentences count: %s" % d.document_count)
             # self._logger.info("Entity count: %s" % d.entity_count)
 
-        self._logger.info("Context size: %s" % self._input_reader.context_size)
+        self._logger.info("Context size: %s" % self._reader.context_size)

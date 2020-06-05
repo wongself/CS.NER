@@ -1,7 +1,6 @@
 import json
 from abc import abstractmethod, ABC
 from collections import OrderedDict
-from logging import Logger
 from typing import Iterable, List
 
 from tqdm import tqdm
@@ -13,8 +12,7 @@ from ner.model.entity import Dataset, EntityType, Entity, Document
 class BaseInputReader(ABC):
     def __init__(
         self, types_path: str, tokenizer: BertTokenizer,
-        neg_entity_count: int = None, max_span_size:
-        int = None, logger: Logger = None): # noqa
+        neg_entity_count: int = None, max_span_size: int = None): # noqa
         types = json.load(open(types_path), object_pairs_hook=OrderedDict)
 
         self._entity_types = OrderedDict()
@@ -38,7 +36,6 @@ class BaseInputReader(ABC):
         self._datasets = dict()
 
         self._tokenizer = tokenizer
-        self._logger = logger
 
         self._vocabulary_size = tokenizer.vocab_size
         self._context_size = -1
@@ -63,10 +60,6 @@ class BaseInputReader(ABC):
 
         context_size = max(sizes)
         return context_size
-
-    def _log(self, text):
-        if self._logger is not None:
-            self._logger.info(text)
 
     @property
     def datasets(self):
@@ -103,9 +96,8 @@ class BaseInputReader(ABC):
 class JsonInputReader(BaseInputReader):
     def __init__(
         self, types_path: str, tokenizer: BertTokenizer,
-        neg_entity_count: int = None, max_span_size: int = None,
-        logger: Logger = None): # noqa
-        super().__init__(types_path, tokenizer, neg_entity_count, max_span_size, logger)
+        neg_entity_count: int = None, max_span_size: int = None): # noqa
+        super().__init__(types_path, tokenizer, neg_entity_count, max_span_size)
 
     def read(self, dataset_packages):
         for dataset_label, jdocument in dataset_packages.items():
